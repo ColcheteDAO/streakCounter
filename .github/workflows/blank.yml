@@ -1,0 +1,10 @@
+name: CI
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Calculate user streak
+        run: echo streak 9000 days

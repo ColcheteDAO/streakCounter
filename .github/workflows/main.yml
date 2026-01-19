@@ -3,8 +3,9 @@ on:
   workflow_dispatch:
 jobs:
   build:
+    environment: main
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Calculate user streak
-        run: bash calculateStreak.sh juancolchete
+        run: bash calculateStreak.sh juancolchete ${{ secrets.GITHUB_TOKEN }}

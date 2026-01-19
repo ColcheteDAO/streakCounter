@@ -13,5 +13,6 @@ EVENTS=$(curl --location 'https://api.github.com/graphql' \
 --data '{
     "query": "query { user(login: \"juancolchete\") { name createdAt contributionsCollection(from: \"'"$ACCOUNT_CREATED_AT"'\") { startedAt contributionCalendar { totalContributions weeks { contributionDays { date contributionCount } } } } } }"
 }')
+echo "query { user(login: \"juancolchete\") { name createdAt contributionsCollection(from: \"'"$ACCOUNT_CREATED_AT"'\") { startedAt contributionCalendar { totalContributions weeks { contributionDays { date contributionCount } } } } } }"
 echo $EVENTS
 echo $USERNAME started at $ACCOUNT_CREATED_AT streak 9000

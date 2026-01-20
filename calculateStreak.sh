@@ -1,6 +1,6 @@
 USERNAME=$1
 GITHUB_PAT=$2
-EVENTS=$(curl --location 'https://api.github.com/graphql' \
+EVENTS=$(curl -S --location 'https://api.github.com/graphql' \
 --header 'Content-Type: application/json' \
 --header "Authorization: Bearer $GITHUB_PAT" \
 --data '{
@@ -9,24 +9,18 @@ EVENTS=$(curl --location 'https://api.github.com/graphql' \
 TODAY_YEAR=$(date -u +"%Y")
 ACCOUNT_CREATED_AT=$(echo $EVENTS | jq -r '.data.user.createdAt')
 ACCOUNT_CREATED_AT_YEAR=${ACCOUNT_CREATED_AT:0:4}
-YEARS_TO_RUN=$((TODAY_YEAR - ACCOUNT_CREATED_AT_YEAR))
-echo "acccvre"
-echo "$YEARS_TO_RUN"
 RUN_YEAR=$ACCOUNT_CREATED_AT_YEAR
-touch "${USERNAME}Contributions.json"
 echo "[]" > "${USERNAME}Contributions.json"
+
 for i in $(seq $ACCOUNT_CREATED_AT_YEAR $TODAY_YEAR)
 do
-    RESPONSE=$(curl --location 'https://api.github.com/graphql' \
+    RESPONSE=$(curl -S --location 'https://api.github.com/graphql' \
     --header 'Content-Type: application/json' \
     --header "Authorization: Bearer $GITHUB_PAT" \
     --data '{
         "query": "query { user(login: \"juancolchete\") { name createdAt contributionsCollection(from: \"'$RUN_YEAR'-01-01T00:00:00Z\") { startedAt contributionCalendar { totalContributions weeks { contributionDays { date contributionCount } } } } } }"
     }')
     NEW_DAYS=$(echo $RESPONSE | jq '[.data.user.contributionsCollection.contributionCalendar.weeks[].contributionDays[]] | .[:-1]')
-    echo $USERNAME started at $ACCOUNT_CREATED_AT streak 9000 $RUN_YEAR
     RUN_YEAR=$((RUN_YEAR + 1))
-    
     jq -n --slurpfile old "${USERNAME}Contributions.json" --argjson new "$NEW_DAYS" '($old | add) + $new' > "temp.json" && mv "temp.json" "${USERNAME}Contributions.json"
 done
-cat "${USERNAME}Contributions.json"

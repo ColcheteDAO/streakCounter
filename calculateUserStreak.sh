@@ -20,3 +20,15 @@ done < <(jq -r '.[] | select(.date < "'$TODAY'") | .contributionCount' "contribu
 echo contr $CONTRIBUTION_DAYS_COUNT
 AVG_CONTRIBUTION=$((CONTRIBUTION_COUNT / $CONTRIBUTION_DAYS_COUNT ))
 echo $USERNAME streak is $STREAK_COUNT total contributions $CONTRIBUTION_COUNT avg contributions per day $AVG_CONTRIBUTION best streak is $MAX_STREAK
+
+mkdir -p streakData
+cat >"streakData/${USERNAME}.json" <<EOL
+{
+  "username": "$USERNAME",
+  "streakCount": "$STREAK_COUNT",
+  "contributionCount": "$CONTRIBUTION_COUNT",
+  "avgContribution": "$AVG_CONTRIBUTION"
+  "maxStreak": "$MAX_STREAK"
+}
+... 
+EOL

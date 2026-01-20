@@ -10,7 +10,7 @@ do
   if [[ $count -gt 0 ]]; then
     STREAK_COUNT=$(( STREAK_COUNT + 1 ))
     CONTRIBUTION_COUNT=$(( CONTRIBUTION_COUNT + count ))
-    if[[ $STREAK_COUNT -gt $MAX_STREAK ]]; then
+    if [[ $STREAK_COUNT -gt $MAX_STREAK ]]; then
       MAX_STREAK=$STREAK_COUNT
     fi
   else

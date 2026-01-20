@@ -6,7 +6,7 @@ STREAK_FILE="streakData/${USERNAME}.json"
 
 # 1. Data Extraction & Date Formatting
 RAW_CREATED_AT=$(jq -r '.user.createdAt' "$USER_FILE")
-RAW_STREAK_START=$(jq -r '.currentStreakStart' "$STREAK_FILE") # Make sure this key exists in your json
+RAW_STREAK_START=$(jq -r '.maxStreakDate' "$STREAK_FILE") # Make sure this key exists in your json
 STREAK_START=$(date -d "$RAW_STREAK_START" +"%b %d, %Y")
 START_DATE=$(date -d "$RAW_CREATED_AT" +"%b %d, %Y")
 

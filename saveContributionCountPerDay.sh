@@ -4,7 +4,7 @@ EVENTS=$(curl -S --location 'https://api.github.com/graphql' \
 --header 'Content-Type: application/json' \
 --header "Authorization: Bearer $GITHUB_PAT" \
 --data '{
-    "query": "query { user(login: \"juancolchete\") { name createdAt  } }"
+    "query": "query { user(login: \"'$USERNAME'\") { name createdAt  } }"
 }')
 TODAY_YEAR=$(date -u +"%Y")
 ACCOUNT_CREATED_AT=$(echo $EVENTS | jq -r '.data.user.createdAt')
@@ -22,7 +22,7 @@ do
     --header 'Content-Type: application/json' \
     --header "Authorization: Bearer $GITHUB_PAT" \
     --data '{
-        "query": "query { user(login: \"juancolchete\") { name createdAt contributionsCollection(from: \"'$RUN_YEAR'-01-01T00:00:00Z\") { startedAt contributionCalendar { totalContributions weeks { contributionDays { date contributionCount } } } } } }"
+        "query": "query { user(login: \"'$USERNAME'\") { name createdAt contributionsCollection(from: \"'$RUN_YEAR'-01-01T00:00:00Z\") { startedAt contributionCalendar { totalContributions weeks { contributionDays { date contributionCount } } } } } }"
     }')
     NEW_DAYS=$(echo $RESPONSE | jq '[.data.user.contributionsCollection.contributionCalendar.weeks[].contributionDays[]] | .[:-1]')
     RUN_YEAR=$((RUN_YEAR + 1))

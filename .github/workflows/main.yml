@@ -1,6 +1,8 @@
 name: Save user contribution and calculate user streak and generate user badge
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "59 9,15,21 * * *"
 jobs:
   build:
     environment: main

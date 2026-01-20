@@ -25,7 +25,7 @@ do
     }')
     NEW_DAYS=$(echo $RESPONSE | jq '[.data.user.contributionsCollection.contributionCalendar.weeks[].contributionDays[]] | .[:-1]')
     echo $USERNAME started at $ACCOUNT_CREATED_AT streak 9000
-    RUN_YEAR=$((ACCOUNT_CREATED_AT_YEAR + 1))
+    RUN_YEAR=$((RUN_YEAR + 1))
     
     jq -n --argjson old "$(cat ${USERNAME}Contributions.json)" --argjson new "$NEW_DAYS" '$old + $new' > "temp.json" && mv "temp.json" "${USERNAME}Contributions.json"
 done

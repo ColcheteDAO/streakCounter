@@ -15,7 +15,7 @@ echo "$YEARS_TO_RUN"
 RUN_YEAR=$ACCOUNT_CREATED_AT_YEAR
 touch "${USERNAME}Contributions.json"
 echo "[]" > "${USERNAME}Contributions.json"
-for i in $(seq 0 $YEARS_TO_RUN)
+for i in $(seq $ACCOUNT_CREATED_AT_YEAR $TODAY_YEAR)
 do
     RESPONSE=$(curl --location 'https://api.github.com/graphql' \
     --header 'Content-Type: application/json' \

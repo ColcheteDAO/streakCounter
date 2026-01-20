@@ -10,6 +10,7 @@ jobs:
       - name: Calculate user streak
         run: |
             bash saveContributionCountPerDay.sh juancolchete "${{ secrets.GITHUB_TOKEN }}"
+            bash calculateUserStreak.sh juancolchete
       - name: Upload to git
         id: uploadGit
         run: |

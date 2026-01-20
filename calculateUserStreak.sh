@@ -7,6 +7,7 @@ do
     STREAK_COUNT=$(( STREAK_COUNT + 1 ))
     echo $STREAK_COUNT
   else
+    echo here
     STREAK_COUNT=0
   fi
 done

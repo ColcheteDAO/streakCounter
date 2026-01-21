@@ -8,7 +8,7 @@ USERNAME=$1
 USER_FILE="data/${USERNAME}.json"
 STREAK_FILE="streakData/${USERNAME}.json"
 
-echo "Generating badge with hollow flame adjusted (right 2px, rotate +3deg) for: $USERNAME"
+echo "Generating badge with fixed text and image alignment for: $USERNAME"
 
 # 2. Check Data
 if [ ! -f "$USER_FILE" ] || [ ! -f "$STREAK_FILE" ]; then
@@ -36,10 +36,12 @@ ORANGE="#ff9a00"
 SUB_TEXT="#8b949e"
 DIVIDER="#30363d"
 
-# --- COORDINATES ---
-VAL_Y=95    # Big Number
-LBL_Y=135   # Label
-SUB_Y=160   # Date
+# --- COORDINATES (Centered Vertically) ---
+# Canvas Center Y: 125
+# Text moved slightly down to sit comfortably in the ring
+VAL_Y=100   # Big Number (Down 5px from previous)
+LBL_Y=140   # Label
+SUB_Y=165   # Date
 
 MY_FONT=$(convert -list font | grep -oE "Arial|Liberation-Sans|DejaVu-Sans" | head -n 1)
 [ -z "$MY_FONT" ] && MY_FONT="fixed"
@@ -69,24 +71,27 @@ CMD=(
     -fill "$SUB_TEXT" -pointsize 14 -annotate -284+$SUB_Y "$START_DATE - Present"
 
     # --- Column 2: The Ring ---
+    # Center X: 425. Center Y: 125.
     -fill none -stroke "$ORANGE" -strokewidth 5
     -draw "arc 330,30 520,220 0,360"
     
-    # --- FLAME ICON ---
+    # --- FLAME ICON (Perfectly Aligned) ---
     
     # 1. Mask (Background Color) - Cuts the circle line
     -fill "$BG_COLOR" -stroke "$BG_COLOR" -strokewidth 8
     -draw "path 'M 425,42 C 405,42 402,20 414,12 Q 424,25 434,0 C 445,12 445,42 425,42 Z'"
     
     # 2. Outer Flame (Orange)
+    # Perfectly centered at X=425
     -fill "$ORANGE" -stroke none
     -draw "path 'M 425,42 C 405,42 402,20 414,12 Q 424,25 434,0 C 445,12 445,42 425,42 Z'"
     
     # 3. Inner Flame (Hollow Effect)
-    # - Moved 2px RIGHT from previous position (X values +2: 420->422, etc.)
-    # - Rotation increased from 10 to 13 degrees clockwise.
+    # - Centered at X=425 (Removed previous manual shifts)
+    # - Rotated 13 degrees clockwise
+    # - Path points recalculated to be symmetric around 425 before rotation
     -fill "$BG_COLOR" -stroke none
-    -draw "translate 422,28 rotate 13 translate -422,-28 path 'M 422,37 C 414,37 414,25 417,20 Q 423,28 429,13 C 434,22 435,37 422,37 Z'"
+    -draw "translate 425,28 rotate 13 translate -425,-28 path 'M 425,37 C 417,37 417,25 420,20 Q 426,28 432,13 C 437,22 438,37 425,37 Z'"
     
     # --- Column 2: Center Text ---
     -fill "$TEXT_COLOR" -pointsize 52 -annotate +0+$VAL_Y "$STREAK"
@@ -104,4 +109,4 @@ CMD=(
 # 6. Execute
 "${CMD[@]}"
 
-echo "Success: Badge generated with hollow flame shifted right and rotated."
+echo "Success: Badge generated with corrected text and image alignment."

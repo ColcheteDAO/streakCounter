@@ -6,10 +6,10 @@ STREAK_FILE="streakData/${USERNAME}.json"
 
 # 1. Data Extraction & Date Formatting
 RAW_CREATED_AT=$(jq -r '.user.createdAt' "$USER_FILE")
-RAW_MAX_STREAK_DATE=$(jq -r '.maxStreakDate' "$STREAK_FILE")
+RAW_CURRENT_STREAK_DATE=$(jq -r '.currentStreakDate' "$STREAK_FILE")
 
 START_DATE=$(date -d "$RAW_CREATED_AT" +"%b %d, %Y")
-[ "$RAW_MAX_STREAK_DATE" != "null" ] && MAX_STREAK_DISPLAY=$(date -d "$RAW_MAX_STREAK_DATE" +"%b %d, %Y") || MAX_STREAK_DISPLAY="N/A"
+[ "$RAW_CURRENT_STREAK_DATE" != "null" ] && CURRENT_STREAK_DISPLAY=$(date -d "$RAW_CURRENT_STREAK_DATE" +"%b %d, %Y") || CURRENT_STREAK_DISPLAY="N/A"
 
 STREAK=$(jq -r '.streakCount' "$STREAK_FILE")
 TOTAL_CONTRIB=$(jq -r '.contributionCount' "$STREAK_FILE")
@@ -44,7 +44,7 @@ convert -size ${WIDTH}x${HEIGHT} xc:"$BG_COLOR" \
     -draw "arc 370,45 480,155 140,400" \
     -fill "$ORANGE" -stroke none -draw "path 'M 425,35 Q 415,50 425,65 Q 435,50 425,35 Z'" \
     -fill "$ORANGE" -pointsize 18 -gravity North -annotate +0+165 "Current Streak" \
-    -fill "$SUB_TEXT" -pointsize 14 -gravity North -annotate +0+195 "$MAX_STREAK_DISPLAY - Present" \
+    -fill "$SUB_TEXT" -pointsize 14 -gravity North -annotate +0+195 "$CURRENT_STREAK_DISPLAY - Present" \
     -fill "$TEXT_COLOR" -pointsize 52 -gravity North -annotate +0+75 "$STREAK" \
     -stroke none -fill "$TEXT_COLOR" -gravity East \
     -pointsize 52 -annotate +100-20 "$MAX_STREAK" \

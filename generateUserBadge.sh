@@ -66,4 +66,47 @@ CMD=(
 
     # --- Column 1: Total Contributions ---
     -pointsize 52 -annotate -284+$VAL_Y "$TOTAL_CONTRIB"
-    -pointsize 18 -annotate -28
+    -pointsize 18 -annotate -284+$LBL_Y "Total Contributions"
+    -fill "$SUB_TEXT" -pointsize 14 -annotate -284+$SUB_Y "$START_DATE - Present"
+
+    # --- Column 2: The Ring ---
+    -fill none -stroke "$ORANGE" -strokewidth 5
+    -draw "arc 330,30 520,220 0,360"
+    
+    # --- IMPROVED FLAME ICON ---
+    # Organic "S" shape with two distinct tips.
+    # Base Center: 425,42
+    
+    # 1. Mask (Background Color) - Hides the circle line behind the flame
+    -fill "$BG_COLOR" -stroke "$BG_COLOR" -strokewidth 5
+    -draw "path 'M 425,42 C 408,42 408,22 414,16 C 420,26 426,20 432,6 C 442,16 442,42 425,42 Z'"
+    
+    # 2. Outer Flame (Orange)
+    # Left Lick: Curves out left then sharp in to (414,16)
+    # Valley: Dips down to (426,20) then up to Right Tip (432,6)
+    # Right Lick: Tall tip curves down/right back to base.
+    -fill "$ORANGE" -stroke none
+    -draw "path 'M 425,42 C 408,42 408,22 414,16 C 420,26 426,20 432,6 C 442,16 442,42 425,42 Z'"
+    
+    # 3. Inner Flame (Hollow Effect)
+    # A smooth teardrop that leans right, fitting inside the main shape.
+    -fill "$BG_COLOR" -stroke none
+    -draw "path 'M 425,36 C 416,36 416,24 422,18 Q 425,12 428,18 C 434,24 435,36 425,36 Z'"
+    
+    # --- Column 2: Center Text ---
+    -fill "$TEXT_COLOR" -pointsize 52 -annotate +0+$VAL_Y "$STREAK"
+    -fill "$ORANGE" -pointsize 18 -annotate +0+$LBL_Y "Current Streak"
+    -fill "$SUB_TEXT" -pointsize 14 -annotate +0+$SUB_Y "$CURRENT_STREAK_DISPLAY - Present"
+
+    # --- Column 3: Longest Streak ---
+    -fill "$TEXT_COLOR" -pointsize 52 -annotate +284+$VAL_Y "$MAX_STREAK"
+    -pointsize 18 -annotate +284+$LBL_Y "Longest Streak"
+    -fill "$SUB_TEXT" -pointsize 14 -annotate +284+$SUB_Y "All-time High"
+
+    "$OUTPUT"
+)
+
+# 6. Execute
+"${CMD[@]}"
+
+echo "Success: Badge generated with improved flame icon."

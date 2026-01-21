@@ -8,7 +8,7 @@ USERNAME=$1
 USER_FILE="data/${USERNAME}.json"
 STREAK_FILE="streakData/${USERNAME}.json"
 
-echo "Generating badge with smaller hollow flame for: $USERNAME"
+echo "Generating badge with increased (+10%) and aligned hollow flame for: $USERNAME"
 
 # 2. Check Data
 if [ ! -f "$USER_FILE" ] || [ ! -f "$STREAK_FILE" ]; then
@@ -72,7 +72,7 @@ CMD=(
     -fill none -stroke "$ORANGE" -strokewidth 5
     -draw "arc 330,30 520,220 0,360"
     
-    # --- FLAME ICON (Small Hollow) ---
+    # --- FLAME ICON (Hollow increased 10% & Aligned) ---
     
     # 1. Mask (Background Color) - Cuts the circle line
     -fill "$BG_COLOR" -stroke "$BG_COLOR" -strokewidth 8
@@ -82,11 +82,11 @@ CMD=(
     -fill "$ORANGE" -stroke none
     -draw "path 'M 425,42 C 405,42 402,20 414,12 Q 424,25 434,0 C 445,12 445,42 425,42 Z'"
     
-    # 3. Inner Flame (Hollow Effect - REDUCED SIZE)
-    # Scaled down significantly (approx 50%) to make the flame appear thicker.
-    # New Base: 425,35. New Tip: 429,18.
+    # 3. Inner Flame (Hollow Effect - Increased size by ~10% and aligned)
+    # Old path height: 17px. New path height: ~20px.
+    # Points shifted outwards to align parallel to outer shape.
     -fill "$BG_COLOR" -stroke none
-    -draw "path 'M 425,35 C 419,35 419,27 422,23 Q 426,28 429,18 C 432,24 432,35 425,35 Z'"
+    -draw "path 'M 425,36 C 418,36 418,26 421,22 Q 426,29 430,16 C 434,23 435,36 425,36 Z'"
     
     # --- Column 2: Center Text ---
     -fill "$TEXT_COLOR" -pointsize 52 -annotate +0+$VAL_Y "$STREAK"
@@ -104,4 +104,4 @@ CMD=(
 # 6. Execute
 "${CMD[@]}"
 
-echo "Success: Badge generated with reduced flame hollow size."
+echo "Success: Badge generated with adjusted hollow flame size."

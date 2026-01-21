@@ -8,7 +8,7 @@ USERNAME=$1
 USER_FILE="data/${USERNAME}.json"
 STREAK_FILE="streakData/${USERNAME}.json"
 
-echo "Generating badge with centered text and flame for: $USERNAME"
+echo "Generating badge for: $USERNAME"
 
 # 2. Check Data
 if [ ! -f "$USER_FILE" ] || [ ! -f "$STREAK_FILE" ]; then
@@ -36,15 +36,17 @@ ORANGE="#ff9a00"
 SUB_TEXT="#8b949e"
 DIVIDER="#30363d"
 
-# --- Centering Math ---
-# Canvas Center Y = 125.
-# Circle: Y=25 to Y=235 (Center Y=130).
-# Text Block: Number(52pt) + Label(18pt) + Date(14pt)
-# We position baselines to visually center the block in the circle.
+# --- Perfect Centering Math ---
+# Canvas Height: 250px -> Center Y: 125px
+# Text Spacing (Increased to prevent collision):
+#   Number Baseline: 100 (Moves it UP)
+#   Label Baseline:  150 (Gap of 50px from number)
+#   Date Baseline:   180 (Gap of 30px from label)
+#   Visual Center of Text Block: ~125px (Perfect Match)
 
-VAL_Y=115   # Number Baseline (Top of number will be ~75)
-LBL_Y=155   # Label Baseline
-SUB_Y=185   # Date Baseline (Bottom of text will be ~185)
+VAL_Y=100
+LBL_Y=150
+SUB_Y=180
 
 MY_FONT=$(convert -list font | grep -oE "Arial|Liberation-Sans|DejaVu-Sans" | head -n 1)
 [ -z "$MY_FONT" ] && MY_FONT="fixed"
@@ -74,20 +76,23 @@ CMD=(
     -fill "$SUB_TEXT" -pointsize 14 -annotate -284+$SUB_Y "$START_DATE - Present"
 
     # --- Column 2: The Ring & Flame ---
-    # Circle: 320,25 to 530,235 (210px Diameter, Center Y=130)
-    # 0,360 draws a full closed ring.
+    # Canvas Center Y = 125.
+    # Circle Diameter = 210px (Radius = 105).
+    # Top Y = 125 - 105 = 20.
+    # Bottom Y = 125 + 105 = 230.
+    # Box: 320,20 to 530,230.
     -fill none -stroke "$ORANGE" -strokewidth 5
-    -draw "arc 320,25 530,235 0,360"
+    -draw "arc 320,20 530,230 0,360"
     
-    # Flame: Base at 425,25 (Top of circle). Points UP to 425,5.
+    # Flame: Sits exactly at Top Y (20). Extends up to Y=0.
+    # We draw it twice: once with BG color to "cut" the ring, then in Orange.
     -fill "$BG_COLOR" -stroke "$ORANGE" -strokewidth 5
-    # We fill with BG_COLOR to hide the circle line behind the flame
-    -draw "path 'M 425,25 Q 415,10 425,5 Q 435,10 425,25 Z'"
-    # Redraw flame center in Orange
-    -fill "$ORANGE" -stroke none
-    -draw "path 'M 425,25 Q 415,10 425,5 Q 435,10 425,25 Z'"
+    -draw "path 'M 425,20 Q 415,5 425,0 Q 435,5 425,20 Z'"
     
-    # --- Column 2: Center Text (Inside the Ring) ---
+    -fill "$ORANGE" -stroke none
+    -draw "path 'M 425,20 Q 415,5 425,0 Q 435,5 425,20 Z'"
+    
+    # --- Column 2: Center Text (Perfectly Spaced) ---
     -fill "$TEXT_COLOR" -pointsize 52 -annotate +0+$VAL_Y "$STREAK"
     -fill "$ORANGE" -pointsize 18 -annotate +0+$LBL_Y "Current Streak"
     -fill "$SUB_TEXT" -pointsize 14 -annotate +0+$SUB_Y "$CURRENT_STREAK_DISPLAY - Present"
@@ -103,4 +108,4 @@ CMD=(
 # 6. Execute
 "${CMD[@]}"
 
-echo "Success: Badge generated. Text centered, flame on line."
+echo "Success: Badge generated. Text centered and spacing fixed."

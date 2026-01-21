@@ -8,7 +8,7 @@ USERNAME=$1
 USER_FILE="data/${USERNAME}.json"
 STREAK_FILE="streakData/${USERNAME}.json"
 
-echo "Generating badge with larger (+10%) rotated hollow flame for: $USERNAME"
+echo "Generating badge with hollow flame moved left for: $USERNAME"
 
 # 2. Check Data
 if [ ! -f "$USER_FILE" ] || [ ! -f "$STREAK_FILE" ]; then
@@ -82,14 +82,11 @@ CMD=(
     -fill "$ORANGE" -stroke none
     -draw "path 'M 425,42 C 405,42 402,20 414,12 Q 424,25 434,0 C 445,12 445,42 425,42 Z'"
     
-    # 3. Inner Flame (Hollow Effect - SCALED UP 10% & Rotated)
-    # Scaled Coordinates: 
-    #   Tip moved up from 16 to 13. 
-    #   Base moved down from 36 to 37.
-    #   Side control points expanded by ~1px.
-    # Rotated 10 degrees clockwise around center.
+    # 3. Inner Flame (Hollow Effect - MOVED LEFT 5PX)
+    # Rotation Center shifted: 425 -> 420
+    # Path X-coordinates subtracted by 5 (e.g., 425->420, 417->412, etc.)
     -fill "$BG_COLOR" -stroke none
-    -draw "translate 425,28 rotate 10 translate -425,-28 path 'M 425,37 C 417,37 417,25 420,20 Q 426,28 432,13 C 437,22 438,37 425,37 Z'"
+    -draw "translate 420,28 rotate 10 translate -420,-28 path 'M 420,37 C 412,37 412,25 415,20 Q 421,28 427,13 C 432,22 433,37 420,37 Z'"
     
     # --- Column 2: Center Text ---
     -fill "$TEXT_COLOR" -pointsize 52 -annotate +0+$VAL_Y "$STREAK"
@@ -107,4 +104,4 @@ CMD=(
 # 6. Execute
 "${CMD[@]}"
 
-echo "Success: Badge generated with larger hollow flame."
+echo "Success: Badge generated with hollow flame shifted 5px left."

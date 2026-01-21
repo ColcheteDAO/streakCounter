@@ -1,4 +1,4 @@
-name: Calculate user streak
+name: Save contribution count per day
 on:
   workflow_dispatch:
 jobs:

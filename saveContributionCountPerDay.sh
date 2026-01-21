@@ -15,7 +15,10 @@ mkdir -p contributions
 mkdir -p data
 echo "[]" > "contributions/${USERNAME}.json"
 echo $USER_DATA > "data/${USERNAME}.json"
-
+echo "=============================="
+echo $ACCOUNT_CREATED_AT_YEAR
+echo $TODAY_YEAR
+echo "=============================="
 for i in $(seq $ACCOUNT_CREATED_AT_YEAR $TODAY_YEAR)
 do
     RESPONSE=$(curl -Ss --location 'https://api.github.com/graphql' \

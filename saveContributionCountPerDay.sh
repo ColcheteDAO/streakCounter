@@ -1,6 +1,6 @@
 USERNAME=$1
 GITHUB_PAT=$2
-EVENTS=$(curl -S --location 'https://api.github.com/graphql' \
+EVENTS=$(curl -Ss --location 'https://api.github.com/graphql' \
 --header 'Content-Type: application/json' \
 --header "Authorization: Bearer $GITHUB_PAT" \
 --data '{

@@ -1,2 +1,2 @@
-FROM ubuntu:22.04
-RUN apt-get update && apt-get install -y imagemagick git jq
+FROM ubuntu:24.04
+RUN apt-get update && apt-get install -y imagemagick git curl jq && /bin/bash

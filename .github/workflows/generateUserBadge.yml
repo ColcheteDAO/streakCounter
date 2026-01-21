@@ -8,7 +8,7 @@ jobs:
     container: juancolchete/imagemagickgithubactions:latest
     steps:
       - uses: actions/checkout@v4
-      - name: Calculate user streak
+      - name: Generate user badge
         shell: bash
         run: |
             while read -r user; 

@@ -76,15 +76,15 @@ CMD=(
     # --- FLAME ICON CONSTRUCTION ---
     # 1. Background Mask: Clears the circle line where the flame sits
     -fill "$BG_COLOR" -stroke "$ORANGE" -strokewidth 5
-    -draw "path 'M 425,28 C 408,28 408,10 425,-5 C 442,10 442,28 425,28 Z'"
+    -draw "path 'M 425,38 C 408,38 408,20 425,5 C 442,20 442,38 425,38 Z'"
     
     # 2. Outer Flame (Orange): The main shape of the fire
     -fill "$ORANGE" -stroke none
-    -draw "path 'M 425,28 C 408,28 408,10 425,-5 C 442,10 442,28 425,28 Z'"
+    -draw "path 'M 425,38 C 408,38 408,20 425,5 C 442,20 442,38 425,38 Z'"
     
     # 3. Inner Flame (Dark): The 'hole' inside the fire to make it look hollow
     -fill "$BG_COLOR" -stroke none
-    -draw "path 'M 425,23 C 415,23 415,10 425,4 C 435,10 435,23 425,23 Z'"
+    -draw "path 'M 425,33 C 415,33 415,20 425,14 C 435,20 435,33 425,33 Z'"
     
     # --- Column 2: Center Text ---
     -fill "$TEXT_COLOR" -pointsize 52 -annotate +0+$VAL_Y "$STREAK"

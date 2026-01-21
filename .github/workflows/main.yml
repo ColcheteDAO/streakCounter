@@ -9,9 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: awalsh128/cache-apt-pkgs-action@latest
-        with:
-          packages: imagemagick
+      - name: Calculate user streak
+        run: sudo apt update && sudo apt install imagemagick
       - name: Calculate user streak
         run: |
             while read -r user; 

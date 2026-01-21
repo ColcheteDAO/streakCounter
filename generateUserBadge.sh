@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Force standard number formatting (Fixes comma/dot locale issues)
+# Force standard number formatting to prevent locale errors (Fixes the '2' error)
 export LC_NUMERIC="C"
 
 USERNAME=$1
@@ -27,12 +27,11 @@ ORANGE="#ff9a00"
 SUB_TEXT="#8b949e"
 DIVIDER="#30363d"
 
-# Vertical Y-coordinates (Balanced Visual Spacing)
-VAL_Y=100   # Big Numbers
-LBL_Y=145   # Labels
-SUB_Y=170   # Dates
+# Vertical Y-coordinates (Adjusted +10px for Labels and Subtext)
+VAL_Y=100   # Big Numbers (Fixed)
+LBL_Y=155   # Labels (Moved down from 145)
+SUB_Y=180   # Dates (Moved down from 170)
 
-# Font detection
 MY_FONT=$(convert -list font | grep -oE "Arial|Liberation-Sans|DejaVu-Sans" | head -n 1)
 [ -z "$MY_FONT" ] && MY_FONT="fixed"
 
@@ -40,7 +39,6 @@ OUTPUT="badges/${USERNAME}_badge.png"
 mkdir -p badges
 
 # 3. Generate Badge
-# I have combined lines to prevent the '2' error and quoted the coordinates
 convert -size ${WIDTH}x${HEIGHT} xc:"$BG_COLOR" \
     -font "$MY_FONT" -fill "$TEXT_COLOR" \
     -fill none -stroke "$DIVIDER" -strokewidth 2 -draw "line 283,50 283,200" \
@@ -59,4 +57,4 @@ convert -size ${WIDTH}x${HEIGHT} xc:"$BG_COLOR" \
     -pointsize 14 -fill "$SUB_TEXT" -annotate +284+$SUB_Y "All-time High" \
     "$OUTPUT"
 
-echo "Success: Badge generated at $OUTPUT"
+echo "Success: Badge generated with +10px spacing."

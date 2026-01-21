@@ -11,6 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Calculate user streak
+        shell: bash
         run: |
             while read -r user; 
             do 
@@ -21,6 +22,7 @@ jobs:
             
       - name: Upload to git
         id: uploadGit
+        shell: bash
         run: |
           git config --global --add safe.directory /__w/streakCounter/streakCounter
           LAST_COMMIT_MSG=$(git log -1 --pretty=%B)

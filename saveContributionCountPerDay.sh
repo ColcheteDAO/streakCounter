@@ -32,4 +32,6 @@ if [[ $ACCOUNT_CREATED_AT_YEAR -gt 1900 ]]; then
         RUN_YEAR=$((RUN_YEAR + 1))
         jq -n --slurpfile old "contributions/${USERNAME}.json" --argjson new "$NEW_DAYS" '($old | add) + $new' > "temp.json" && mv "temp.json" "contributions/${USERNAME}.json"
     done
+else
+echo account $USERNAME does not exists on github
 fi

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Force standard number formatting to prevent locale errors (Fixes the '2' error)
+# Force standard number formatting (Fixes locale/comma errors)
 export LC_NUMERIC="C"
 
 USERNAME=$1
@@ -27,10 +27,10 @@ ORANGE="#ff9a00"
 SUB_TEXT="#8b949e"
 DIVIDER="#30363d"
 
-# Vertical Y-coordinates (Adjusted +10px for Labels and Subtext)
-VAL_Y=100   # Big Numbers (Fixed)
-LBL_Y=155   # Labels (Moved down from 145)
-SUB_Y=180   # Dates (Moved down from 170)
+# Vertical Y-coordinates (Optimized for the larger circle)
+VAL_Y=105   # Number (Slightly lower to center visually in the ring)
+LBL_Y=155   # Label
+SUB_Y=180   # Date
 
 MY_FONT=$(convert -list font | grep -oE "Arial|Liberation-Sans|DejaVu-Sans" | head -n 1)
 [ -z "$MY_FONT" ] && MY_FONT="fixed"
@@ -39,6 +39,7 @@ OUTPUT="badges/${USERNAME}_badge.png"
 mkdir -p badges
 
 # 3. Generate Badge
+# Circle Logic: Top-Left (350,50) to Bottom-Right (500,200) = 150x150px box, perfectly centered.
 convert -size ${WIDTH}x${HEIGHT} xc:"$BG_COLOR" \
     -font "$MY_FONT" -fill "$TEXT_COLOR" \
     -fill none -stroke "$DIVIDER" -strokewidth 2 -draw "line 283,50 283,200" \
@@ -47,8 +48,8 @@ convert -size ${WIDTH}x${HEIGHT} xc:"$BG_COLOR" \
     -pointsize 52 -annotate -284+$VAL_Y "$TOTAL_CONTRIB" \
     -pointsize 18 -annotate -284+$LBL_Y "Total Contributions" \
     -fill "$SUB_TEXT" -pointsize 14 -annotate -284+$SUB_Y "$START_DATE - Present" \
-    -fill none -stroke "$ORANGE" -strokewidth 5 -draw "arc 370,55 480,165 140,400" \
-    -fill "$ORANGE" -stroke none -draw "path 'M 425,45 Q 415,60 425,75 Q 435,60 425,45 Z'" \
+    -fill none -stroke "$ORANGE" -strokewidth 5 -draw "arc 350,50 500,200 140,400" \
+    -fill "$ORANGE" -stroke none -draw "path 'M 425,40 Q 415,55 425,70 Q 435,55 425,40 Z'" \
     -fill "$TEXT_COLOR" -pointsize 52 -annotate +0+$VAL_Y "$STREAK" \
     -fill "$ORANGE" -pointsize 18 -annotate +0+$LBL_Y "Current Streak" \
     -fill "$SUB_TEXT" -pointsize 14 -annotate +0+$SUB_Y "$CURRENT_STREAK_DISPLAY - Present" \
@@ -57,4 +58,4 @@ convert -size ${WIDTH}x${HEIGHT} xc:"$BG_COLOR" \
     -pointsize 14 -fill "$SUB_TEXT" -annotate +284+$SUB_Y "All-time High" \
     "$OUTPUT"
 
-echo "Success: Badge generated with +10px spacing."
+echo "Success: Badge generated with larger, centered circle."

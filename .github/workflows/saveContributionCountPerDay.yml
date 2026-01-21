@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Calculate user streak
+      - name: Save contribution count per day
         shell: bash
         run: |
             while read -r user; 

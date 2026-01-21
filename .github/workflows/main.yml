@@ -13,9 +13,9 @@ jobs:
       - name: Calculate user streak
         run: |
             chdir /__w/streakCounter/streakCounter
-            bash saveContributionCountPerDay.sh $user "${{ secrets.GITHUB_TOKEN }}"
-            bash calculateUserStreak.sh $user
-            bash generateUserBadge.sh $user
+            bash saveContributionCountPerDay.sh juancolchete "${{ secrets.GITHUB_TOKEN }}"
+            bash calculateUserStreak.sh juancolchete
+            bash generateUserBadge.sh juancolchete
             
       - name: Upload to git
         id: uploadGit

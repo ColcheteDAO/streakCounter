@@ -13,9 +13,6 @@ jobs:
         with:
           packages: imagemagick
           version: 1.0
-      - name: Install dependencies
-        run: |
-            sudo apt update && sudo apt install imagemagick
       - name: Calculate user streak
         run: |
             while read -r user; 

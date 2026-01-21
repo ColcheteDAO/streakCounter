@@ -8,7 +8,7 @@ STREAK_FILE="streakData/${USERNAME}.json"
 RAW_CREATED_AT=$(jq -r '.user.createdAt' "$USER_FILE")
 RAW_CURRENT_STREAK_DATE=$(jq -r '.currentStreakDate' "$STREAK_FILE")
 
-START_DATE=$(date -d "$RAW_CREATED_AT" +"%b %d, %Y")
+[ "$RAW_CURRENT_STREAK_DATE" != "null" ] && START_DATE=$(date -d "$RAW_CREATED_AT" +"%b %d, %Y") || START_DATE="N/A"
 [ "$RAW_CURRENT_STREAK_DATE" != "null" ] && CURRENT_STREAK_DISPLAY=$(date -d "$RAW_CURRENT_STREAK_DATE" +"%b %d, %Y") || CURRENT_STREAK_DISPLAY="N/A"
 
 STREAK=$(jq -r '.streakCount' "$STREAK_FILE")

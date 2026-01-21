@@ -9,8 +9,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Calculate user streak
-        run: sudo apt update && sudo apt install imagemagick
+      # 1. Setup the cache for the apt archive directory
+      - name: Cache Apt Archives
+        id: cache-apt
+        uses: actions/cache@v4
+        with:
+          path: /var/cache/apt/archives
+          # Key includes the OS to ensure compatibility
+          key: ${{ runner.os }}-apt-imagemagick
+    
+      # 2. Install ImageMagick
+      # apt will check the cache dir first. If the .deb is there, it skips download.
+      - name: Install ImageMagick
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick
       - name: Calculate user streak
         run: |
             while read -r user; 

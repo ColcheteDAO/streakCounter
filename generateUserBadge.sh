@@ -8,7 +8,7 @@ USERNAME=$1
 USER_FILE="data/${USERNAME}.json"
 STREAK_FILE="streakData/${USERNAME}.json"
 
-echo "Generating badge with fantastic flame icon for: $USERNAME"
+echo "Generating badge with smaller hollow flame for: $USERNAME"
 
 # 2. Check Data
 if [ ! -f "$USER_FILE" ] || [ ! -f "$STREAK_FILE" ]; then
@@ -37,7 +37,6 @@ SUB_TEXT="#8b949e"
 DIVIDER="#30363d"
 
 # --- COORDINATES ---
-# Circle Diameter: 190px (330,30 to 520,220).
 VAL_Y=95    # Big Number
 LBL_Y=135   # Label
 SUB_Y=160   # Date
@@ -73,27 +72,21 @@ CMD=(
     -fill none -stroke "$ORANGE" -strokewidth 5
     -draw "arc 330,30 520,220 0,360"
     
-    # --- FANTASTIC FLAME ICON ---
-    # Geometry:
-    # Base Center: 425,42
-    # Left Lick: Hooks sharply to 414,12
-    # Right Apex: Shoots up to 434,0 (High & Sharp)
+    # --- FLAME ICON (Small Hollow) ---
     
-    # 1. Mask (Background Color) - Cuts the circle line (Stroke 8 for wide cut)
+    # 1. Mask (Background Color) - Cuts the circle line
     -fill "$BG_COLOR" -stroke "$BG_COLOR" -strokewidth 8
     -draw "path 'M 425,42 C 405,42 402,20 414,12 Q 424,25 434,0 C 445,12 445,42 425,42 Z'"
     
-    # 2. Outer Flame (Orange)
-    # Starts bottom, curves wide left, snaps to sharp left tip.
-    # Dips in middle, then curves up to a very sharp top right tip (Y=0).
-    # Curves back down smoothly to right base.
+    # 2. Outer Flame (Orange) - "Fantastic" Shape
     -fill "$ORANGE" -stroke none
     -draw "path 'M 425,42 C 405,42 402,20 414,12 Q 424,25 434,0 C 445,12 445,42 425,42 Z'"
     
-    # 3. Inner Flame (Hollow Effect)
-    # Carefully scaled to follow the outer contours but keep the "hollow" look consistent.
+    # 3. Inner Flame (Hollow Effect - REDUCED SIZE)
+    # Scaled down significantly (approx 50%) to make the flame appear thicker.
+    # New Base: 425,35. New Tip: 429,18.
     -fill "$BG_COLOR" -stroke none
-    -draw "path 'M 425,36 C 414,36 412,24 418,18 Q 424,26 430,8 C 436,18 436,36 425,36 Z'"
+    -draw "path 'M 425,35 C 419,35 419,27 422,23 Q 426,28 429,18 C 432,24 432,35 425,35 Z'"
     
     # --- Column 2: Center Text ---
     -fill "$TEXT_COLOR" -pointsize 52 -annotate +0+$VAL_Y "$STREAK"
@@ -111,4 +104,4 @@ CMD=(
 # 6. Execute
 "${CMD[@]}"
 
-echo "Success: Badge generated with fantastic flame icon."
+echo "Success: Badge generated with reduced flame hollow size."

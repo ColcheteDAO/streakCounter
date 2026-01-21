@@ -12,7 +12,6 @@ jobs:
       - uses: awalsh128/cache-apt-pkgs-action@latest
         with:
           packages: imagemagick
-          version: 1.0
       - name: Calculate user streak
         run: |
             while read -r user; 

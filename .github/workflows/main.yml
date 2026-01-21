@@ -9,21 +9,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      # 1. Setup the cache for the apt archive directory
+      # 1. PRE-FIX: Give runner permission to the system cache folder
+      - name: Fix Cache Permissions (Before Restore)
+        run: |
+          sudo mkdir -p /var/cache/apt/archives
+          sudo chmod -R 777 /var/cache/apt/archives
+    
+      # 2. RESTORE: Now actions/cache can write to that folder
       - name: Cache Apt Archives
         id: cache-apt
         uses: actions/cache@v4
         with:
           path: /var/cache/apt/archives
-          # Key includes the OS to ensure compatibility
           key: ${{ runner.os }}-apt-imagemagick
     
-      # 2. Install ImageMagick
-      # apt will check the cache dir first. If the .deb is there, it skips download.
+      # 3. INSTALL: Run the install
       - name: Install ImageMagick
         run: |
           sudo apt-get update
           sudo apt-get install -y imagemagick
+          
+          # 4. POST-FIX: Clean lock file and fix permissions AGAIN for the 'Save' phase
+          # (apt-get might have recreated the lock file or changed perms)
           sudo rm -f /var/cache/apt/archives/lock
           sudo chmod -R 777 /var/cache/apt/archives
       - name: Calculate user streak

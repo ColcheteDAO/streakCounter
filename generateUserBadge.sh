@@ -1,5 +1,4 @@
 #!/bin/bash
-cd /__w/streakCounter/streakCounter
 # 1. Safety & Settings
 set -e
 export LC_NUMERIC="C"

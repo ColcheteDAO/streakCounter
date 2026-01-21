@@ -8,7 +8,7 @@ USERNAME=$1
 USER_FILE="data/${USERNAME}.json"
 STREAK_FILE="streakData/${USERNAME}.json"
 
-echo "Generating badge with improved organic flame for: $USERNAME"
+echo "Generating badge with polished flame icon for: $USERNAME"
 
 # 2. Check Data
 if [ ! -f "$USER_FILE" ] || [ ! -f "$STREAK_FILE" ]; then
@@ -37,7 +37,7 @@ SUB_TEXT="#8b949e"
 DIVIDER="#30363d"
 
 # --- COORDINATES ---
-# Circle Diameter: 190px (330,30 to 520,220). Center Y: 125.
+# Circle Diameter: 190px (330,30 to 520,220).
 VAL_Y=95    # Big Number
 LBL_Y=135   # Label
 SUB_Y=160   # Date
@@ -73,25 +73,27 @@ CMD=(
     -fill none -stroke "$ORANGE" -strokewidth 5
     -draw "arc 330,30 520,220 0,360"
     
-    # --- IMPROVED FLAME ICON ---
-    # Organic "S" shape with two distinct tips.
-    # Base Center: 425,42
+    # --- POLISHED FLAME ICON ---
+    # We use a specific geometry:
+    # Base Center: 425,43
+    # Left Tip: 415,20
+    # Right Tip: 435,5 (Taller)
     
-    # 1. Mask (Background Color) - Hides the circle line behind the flame
-    -fill "$BG_COLOR" -stroke "$BG_COLOR" -strokewidth 5
-    -draw "path 'M 425,42 C 408,42 408,22 414,16 C 420,26 426,20 432,6 C 442,16 442,42 425,42 Z'"
+    # 1. Mask (Background Color) - Cuts the circle line behind the flame
+    # Note: We use a stroke of 8 here to ensure the cut is wide enough
+    -fill "$BG_COLOR" -stroke "$BG_COLOR" -strokewidth 8
+    -draw "path 'M 425,43 C 405,43 408,25 415,20 Q 425,30 435,5 C 445,20 445,43 425,43 Z'"
     
     # 2. Outer Flame (Orange)
-    # Left Lick: Curves out left then sharp in to (414,16)
-    # Valley: Dips down to (426,20) then up to Right Tip (432,6)
-    # Right Lick: Tall tip curves down/right back to base.
+    # C = Curve (Control1, Control2, End)
+    # Q = Quad Curve (Control, End)
     -fill "$ORANGE" -stroke none
-    -draw "path 'M 425,42 C 408,42 408,22 414,16 C 420,26 426,20 432,6 C 442,16 442,42 425,42 Z'"
+    -draw "path 'M 425,43 C 405,43 408,25 415,20 Q 425,30 435,5 C 445,20 445,43 425,43 Z'"
     
     # 3. Inner Flame (Hollow Effect)
-    # A smooth teardrop that leans right, fitting inside the main shape.
+    # Scaled down version to create the cutout
     -fill "$BG_COLOR" -stroke none
-    -draw "path 'M 425,36 C 416,36 416,24 422,18 Q 425,12 428,18 C 434,24 435,36 425,36 Z'"
+    -draw "path 'M 425,38 C 415,38 415,28 419,25 Q 425,30 431,15 C 435,22 438,38 425,38 Z'"
     
     # --- Column 2: Center Text ---
     -fill "$TEXT_COLOR" -pointsize 52 -annotate +0+$VAL_Y "$STREAK"
@@ -109,4 +111,4 @@ CMD=(
 # 6. Execute
 "${CMD[@]}"
 
-echo "Success: Badge generated with improved flame icon."
+echo "Success: Badge generated with polished flame icon."

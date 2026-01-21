@@ -19,15 +19,17 @@ echo "=============================="
 echo $ACCOUNT_CREATED_AT_YEAR
 echo $TODAY_YEAR
 echo "=============================="
-for i in $(seq $ACCOUNT_CREATED_AT_YEAR $TODAY_YEAR)
-do
-    RESPONSE=$(curl -Ss --location 'https://api.github.com/graphql' \
-    --header 'Content-Type: application/json' \
-    --header "Authorization: Bearer $GITHUB_PAT" \
-    --data '{
-        "query": "query { user(login: \"'$USERNAME'\") { name createdAt contributionsCollection(from: \"'$RUN_YEAR'-01-01T00:00:00Z\") { startedAt contributionCalendar { totalContributions weeks { contributionDays { date contributionCount } } } } } }"
-    }')
-    NEW_DAYS=$(echo $RESPONSE | jq '[.data.user.contributionsCollection.contributionCalendar.weeks[].contributionDays[]] | .[:-1]')
-    RUN_YEAR=$((RUN_YEAR + 1))
-    jq -n --slurpfile old "contributions/${USERNAME}.json" --argjson new "$NEW_DAYS" '($old | add) + $new' > "temp.json" && mv "temp.json" "contributions/${USERNAME}.json"
-done
+if [[ $ACCOUNT_CREATED_AT_YEAR -gt 1900 ]]; then
+    for i in $(seq $ACCOUNT_CREATED_AT_YEAR $TODAY_YEAR)
+    do
+        RESPONSE=$(curl -Ss --location 'https://api.github.com/graphql' \
+        --header 'Content-Type: application/json' \
+        --header "Authorization: Bearer $GITHUB_PAT" \
+        --data '{
+            "query": "query { user(login: \"'$USERNAME'\") { name createdAt contributionsCollection(from: \"'$RUN_YEAR'-01-01T00:00:00Z\") { startedAt contributionCalendar { totalContributions weeks { contributionDays { date contributionCount } } } } } }"
+        }')
+        NEW_DAYS=$(echo $RESPONSE | jq '[.data.user.contributionsCollection.contributionCalendar.weeks[].contributionDays[]] | .[:-1]')
+        RUN_YEAR=$((RUN_YEAR + 1))
+        jq -n --slurpfile old "contributions/${USERNAME}.json" --argjson new "$NEW_DAYS" '($old | add) + $new' > "temp.json" && mv "temp.json" "contributions/${USERNAME}.json"
+    done
+fi

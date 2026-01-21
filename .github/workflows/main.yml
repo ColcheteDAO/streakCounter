@@ -19,6 +19,7 @@ jobs:
       - name: Upload to git
         id: uploadGit
         run: |
+          git config --global --add safe.directory /__w/streakCounter/streakCounter
           LAST_COMMIT_MSG=$(git log -1 --pretty=%B)
           if [[ `git status --porcelain` ]]; then
             git config --global user.name "juancolchete"

@@ -8,7 +8,7 @@ USERNAME=$1
 USER_FILE="data/${USERNAME}.json"
 STREAK_FILE="streakData/${USERNAME}.json"
 
-echo "Generating badge with increased (+10%) and aligned hollow flame for: $USERNAME"
+echo "Generating badge with rotated hollow flame for: $USERNAME"
 
 # 2. Check Data
 if [ ! -f "$USER_FILE" ] || [ ! -f "$STREAK_FILE" ]; then
@@ -72,21 +72,20 @@ CMD=(
     -fill none -stroke "$ORANGE" -strokewidth 5
     -draw "arc 330,30 520,220 0,360"
     
-    # --- FLAME ICON (Hollow increased 10% & Aligned) ---
+    # --- FLAME ICON ---
     
     # 1. Mask (Background Color) - Cuts the circle line
     -fill "$BG_COLOR" -stroke "$BG_COLOR" -strokewidth 8
     -draw "path 'M 425,42 C 405,42 402,20 414,12 Q 424,25 434,0 C 445,12 445,42 425,42 Z'"
     
-    # 2. Outer Flame (Orange) - "Fantastic" Shape
+    # 2. Outer Flame (Orange) - Remains upright
     -fill "$ORANGE" -stroke none
     -draw "path 'M 425,42 C 405,42 402,20 414,12 Q 424,25 434,0 C 445,12 445,42 425,42 Z'"
     
-    # 3. Inner Flame (Hollow Effect - Increased size by ~10% and aligned)
-    # Old path height: 17px. New path height: ~20px.
-    # Points shifted outwards to align parallel to outer shape.
+    # 3. Inner Flame (Hollow Effect - Rotated 10 degrees clockwise)
+    # We translate to center (425,28), rotate 10deg, translate back, then draw.
     -fill "$BG_COLOR" -stroke none
-    -draw "path 'M 425,36 C 418,36 418,26 421,22 Q 426,29 430,16 C 434,23 435,36 425,36 Z'"
+    -draw "translate 425,28 rotate 10 translate -425,-28 path 'M 425,36 C 418,36 418,26 421,22 Q 426,29 430,16 C 434,23 435,36 425,36 Z'"
     
     # --- Column 2: Center Text ---
     -fill "$TEXT_COLOR" -pointsize 52 -annotate +0+$VAL_Y "$STREAK"
@@ -104,4 +103,4 @@ CMD=(
 # 6. Execute
 "${CMD[@]}"
 
-echo "Success: Badge generated with adjusted hollow flame size."
+echo "Success: Badge generated with rotated hollow flame."

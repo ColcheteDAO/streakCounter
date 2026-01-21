@@ -8,7 +8,7 @@ USERNAME=$1
 USER_FILE="data/${USERNAME}.json"
 STREAK_FILE="streakData/${USERNAME}.json"
 
-echo "Generating enclosed badge for: $USERNAME"
+echo "Generating badge with fixed spacing for: $USERNAME"
 
 # 2. Check Data
 if [ ! -f "$USER_FILE" ] || [ ! -f "$STREAK_FILE" ]; then
@@ -36,10 +36,13 @@ ORANGE="#ff9a00"
 SUB_TEXT="#8b949e"
 DIVIDER="#30363d"
 
-# Adjusted Y-Values to sit nicely inside the larger circle
-VAL_Y=100   # Big Number (Centered higher)
-LBL_Y=145   # Label "Current Streak"
-SUB_Y=175   # Date "Jun 28..."
+# --- Spacing Fixes ---
+# VAL_Y (Number): Moved UP to 80 (was 100) to clear space for the text below.
+# LBL_Y (Label): Kept at 145. Gap between Number (ends ~132) and Label is now ~13px.
+# SUB_Y (Date): Kept at 175.
+VAL_Y=80
+LBL_Y=145
+SUB_Y=175
 
 MY_FONT=$(convert -list font | grep -oE "Arial|Liberation-Sans|DejaVu-Sans" | head -n 1)
 [ -z "$MY_FONT" ] && MY_FONT="fixed"
@@ -47,7 +50,7 @@ MY_FONT=$(convert -list font | grep -oE "Arial|Liberation-Sans|DejaVu-Sans" | he
 OUTPUT="badges/${USERNAME}_badge.png"
 mkdir -p badges
 
-# 5. Build Command (Using Array for stability)
+# 5. Build Command
 CMD=(
     convert 
     -size "${WIDTH}x${HEIGHT}" 
@@ -56,7 +59,7 @@ CMD=(
     -fill "$TEXT_COLOR"
     
     # --- Vertical Dividers ---
-    # Kept at 283 and 566. The 190px circle fits perfectly between them.
+    # Dividers at 283 and 566 (Leaving space for the 220px circle in the middle)
     -fill none -stroke "$DIVIDER" -strokewidth 2
     -draw "line 283,50 283,200"
     -draw "line 566,50 566,200"
@@ -69,17 +72,18 @@ CMD=(
     -pointsize 18 -annotate -284+$LBL_Y "Total Contributions"
     -fill "$SUB_TEXT" -pointsize 14 -annotate -284+$SUB_Y "$START_DATE - Present"
 
-    # --- Column 2: The Large Circle & Flame ---
-    # Circle Box: 330,30 to 520,220 (190px wide x 190px tall)
-    # This creates a large ring that surrounds all center text
+    # --- Column 2: Large Circle & Flame ---
+    # Circle Box: 315,15 to 535,235 (220px Diameter)
+    # This extra width prevents the date text from hitting the sides.
     -fill none -stroke "$ORANGE" -strokewidth 5
-    -draw "arc 330,30 520,220 135,405"
+    -draw "arc 315,15 535,235 135,405"
     
-    # Flame Path: Moved up to sit on the new top edge (Y=20 to Y=50)
+    # Flame Path: Adjusted to sit exactly on top of the new circle (Y=15)
     -fill "$ORANGE" -stroke none
-    -draw "path 'M 425,20 Q 415,35 425,50 Q 435,35 425,20 Z'"
+    -draw "path 'M 425,15 Q 415,30 425,45 Q 435,30 425,15 Z'"
     
     # --- Column 2: Center Text ---
+    # Now aligned to VAL_Y=80, ensuring no overlap with the label at 145.
     -fill "$TEXT_COLOR" -pointsize 52 -annotate +0+$VAL_Y "$STREAK"
     -fill "$ORANGE" -pointsize 18 -annotate +0+$LBL_Y "Current Streak"
     -fill "$SUB_TEXT" -pointsize 14 -annotate +0+$SUB_Y "$CURRENT_STREAK_DISPLAY - Present"
@@ -95,4 +99,4 @@ CMD=(
 # 6. Execute
 "${CMD[@]}"
 
-echo "Success: Badge generated with text fully enclosed."
+echo "Success: Badge generated. Text collision resolved."

@@ -6,8 +6,8 @@ TODAY=$(date -u +"%Y-%m-%d" -d "-3 hours")
 CONTRIBUTION_DAYS_COUNT=$(cat "contributions/${USERNAME}.json" | jq -r '[.[] | select(.date < "'$TODAY'")] | length')
 MAX_STREAK=0
 INDEX=0
-MAX_STREAK_DATE=$(date -u +"%Y-%m-%d" -d "-3 hours")
-CURRENT_STREAK_DATE=$(date -u +"%Y-%m-%d" -d "-3 hours")
+MAX_STREAK_DATE=null
+CURRENT_STREAK_DATE=null
 while read -r count; 
 do 
   if [[ $count -gt 0 ]]; then

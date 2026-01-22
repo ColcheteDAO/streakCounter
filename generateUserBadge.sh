@@ -50,7 +50,7 @@ MAX_STREAK=$(jq -r '.maxStreak' "$STREAK_FILE")
 
 # 4. Styling & Coordinates
 WIDTH=850
-HEIGHT=310  # Height includes the footer tag area
+HEIGHT=250
 
 # Colors
 BG_COLOR="#0d1117"
@@ -85,7 +85,7 @@ CMD=(
 )
 
 if [[ "$TAG_GEN" == "true" ]]; then
-    HEIGHT=250
+    HEIGHT=310
     CMD+=(
         -fill "$TAG_BG_COLOR" -stroke none
         -draw "rectangle 0,$TAG_START_Y $WIDTH,$HEIGHT"

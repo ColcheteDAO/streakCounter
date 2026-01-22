@@ -33,7 +33,8 @@ if [ ! -f "$USER_CONFIG_FILE" ]; then
   "tagTextColor": "#8b949e",
   "tagText": "@$USERNAME",
   "tagGen": true,
-  "tagImage": ""
+  "tagImage": "",
+  "flameColor":"#ff9a00"
 }
 EOL
 fi
@@ -62,6 +63,7 @@ TAG_TEXT_COLOR=$(jq -r '.tagTextColor' "$USER_CONFIG_FILE")
 TAG_TEXT=$(jq -r '.tagText' "$USER_CONFIG_FILE")
 TAG_GEN=$(jq -r '.tagGen' "$USER_CONFIG_FILE")
 TAG_IMAGE=$(jq -r '.tagImage' "$USER_CONFIG_FILE")
+FLAME_COLOR=$(jq -r '.flameColor' "$USER_CONFIG_FILE")
 ORANGE="#ff9a00"
 SUB_TEXT="#8b949e"
 DIVIDER="#30363d"
@@ -136,7 +138,7 @@ CMD+=(
     -draw "path 'M 425,42 C 405,42 402,20 414,12 Q 424,25 434,0 C 445,12 445,42 425,42 Z'"
     
     # 2. Outer Flame
-    -fill "$ORANGE" -stroke none
+    -fill "$FLAME_COLOR" -stroke none
     -draw "path 'M 425,42 C 405,42 402,20 414,12 Q 424,25 434,0 C 445,12 445,42 425,42 Z'"
     
     # 3. Inner Flame (Hollow Effect)

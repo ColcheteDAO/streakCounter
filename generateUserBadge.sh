@@ -154,7 +154,7 @@ CMD+=(
     -draw "translate 422,28 rotate 13 translate -422,-28 path 'M 422,37 C 414,37 414,25 417,20 Q 423,28 429,13 C 434,22 435,37 422,37 Z'"
     
     # Column 2: Center Text
-    -fill "$TEXT_COLOR" -pointsize 52 -annotate +0+$VAL_Y "$STREAK"
+    -fill "$STREAK_COLOR" -pointsize 52 -annotate +0+$VAL_Y "$STREAK"
     -fill "$ORANGE" -pointsize 18 -annotate +0+$LBL_Y "Current Streak"
     -fill "$SUB_TEXT" -pointsize 14 -annotate +0+$SUB_Y "$CURRENT_STREAK_DISPLAY - Present"
 

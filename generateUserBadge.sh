@@ -89,7 +89,7 @@ if [[ "$TAG_GEN" == "true" ]]; then
     TAG_IMAGE_START_Y=$((HEIGHT))
     if [[ ${#TAG_IMAGE} -gt 4 ]]; then
         CMD+=(
-        -draw "image SrcOver 0,0 $WIDTH,$TAG_HEIGHT images/tagBG.jpg"
+        -draw "image SrcOver 0,0 $WIDTH,$TAG_HEIGHT $TAG_IMAGE"
         )
     fi
     CMD+=(

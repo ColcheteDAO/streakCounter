@@ -1,4 +1,4 @@
-#!/bin/bash
+o#!/bin/bash
 USERNAME=$1
 STREAK_COUNT=0
 CONTRIBUTION_COUNT=0
@@ -36,7 +36,8 @@ if [[ $CONTRIBUTION_DAYS_COUNT -gt 0 ]]; then
   AVG_CONTRIBUTION=$((CONTRIBUTION_COUNT / $CONTRIBUTION_DAYS_COUNT ))
 fi
 echo $USERNAME streak is $STREAK_COUNT total contributions $CONTRIBUTION_COUNT avg contributions per day $AVG_CONTRIBUTION best streak is $MAX_STREAK
-
+echo $YEARS_CONTRIBUTION["2018"]
+echo $YEARS_CONTRIBUTION
 mkdir -p streakData
 cat >"streakData/${USERNAME}.json" <<EOL
 {

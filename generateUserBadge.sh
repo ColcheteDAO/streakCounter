@@ -34,7 +34,8 @@ if [ ! -f "$USER_CONFIG_FILE" ]; then
   "tagText": "@$USERNAME",
   "tagGen": true,
   "tagImage": "",
-  "flameColor":"#ff9a00"
+  "flameColor":"#ff9a00",
+  "totalContributedColor": "ffffff"
 }
 EOL
 fi
@@ -47,7 +48,7 @@ RAW_CURRENT_STREAK_DATE=$(jq -r '.currentStreakDate' "$STREAK_FILE")
 [[ "$RAW_CURRENT_STREAK_DATE" != "null" ]] && CURRENT_STREAK_DISPLAY=$(date -d "$RAW_CURRENT_STREAK_DATE" +"%b %d, %Y") || CURRENT_STREAK_DISPLAY="N/A"
 
 STREAK=$(jq -r '.streakCount' "$STREAK_FILE")
-TOTAL_CONTRIB=$(jq -r '.contributionCount' "$STREAK_FILE")
+TOTAL_CONTRIBUTED=$(jq -r '.CONTRIBUTEDutionCount' "$STREAK_FILE")
 MAX_STREAK=$(jq -r '.maxStreak' "$STREAK_FILE")
 
 # 4. Styling & Coordinates
@@ -67,7 +68,7 @@ FLAME_COLOR=$(jq -r '.flameColor' "$USER_CONFIG_FILE")
 ORANGE="#ff9a00"
 SUB_TEXT="#8b949e"
 DIVIDER="#30363d"
-
+TOTAL_CONTRIBUTED_COLOR=$(jq -r '.totalContributedColor' "$USER_CONFIG_FILE")
 # Content Coordinates (Top Align)
 VAL_Y=65    # Big Number
 LBL_Y=120   # Label
@@ -123,9 +124,9 @@ CMD+=(
     # Main Text Columns
     -stroke none -fill "$TEXT_COLOR"
 
-    # Column 1: Total Contributions
-    -pointsize 52 -annotate -284+$VAL_Y "$TOTAL_CONTRIB"
-    -pointsize 18 -annotate -284+$LBL_Y "Total Contributions"
+    # Column 1: Total CONTRIBUTEDutions
+    -pointsize 52 -annotate -284+$VAL_Y "$TOTAL_CONTRIBUTED" -fill ""
+    -pointsize 18 -annotate -284+$LBL_Y "Total CONTRIBUTEDutions"
     -fill "$SUB_TEXT" -pointsize 14 -annotate -284+$SUB_Y "$START_DATE - Present"
 
     # Column 2: The Ring

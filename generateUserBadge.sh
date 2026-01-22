@@ -89,16 +89,10 @@ CMD=(
     -font "$MY_FONT"
 )
 
-# --- 1. Draw Tag Background (Bottom) ---
-CMD+=(
-    -fill "$TAG_BG_COLOR" -stroke none
-    -draw "rectangle 0,$TAG_START_Y $WIDTH,$HEIGHT"
-)
-
-# --- 2. Conditional Tag Text ---
-# We use '==' for string comparison because jq outputs "true" as a string
 if [[ "$TAG_GEN" == "true" ]]; then
     CMD+=(
+        -fill "$TAG_BG_COLOR" -stroke none
+        -draw "rectangle 0,$TAG_START_Y $WIDTH,$HEIGHT"
         -fill "$TAG_TEXT_COLOR" 
         -pointsize 20 
         -gravity South

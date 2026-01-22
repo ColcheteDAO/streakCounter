@@ -40,7 +40,7 @@ if [ ! -f "$USER_CONFIG_FILE" ]; then
   "totalContributedSubTextColor": "#8b949e",
   "streakColor": "#ffffff",
   "streakTextColor": "#ff9a00",
-  "streakTextColor": "#8b949e"
+  "streakSubTextColor": "#8b949e"
 }
 EOL
 fi

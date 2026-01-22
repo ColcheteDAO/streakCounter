@@ -36,7 +36,8 @@ if [ ! -f "$USER_CONFIG_FILE" ]; then
   "tagImage": "",
   "flameColor":"#ff9a00",
   "totalContributedColor": "#ffffff",
-  "totalContributedTextColor": "#ffffff"
+  "totalContributedTextColor": "#ffffff",
+  "totalContributedSubTextColor": "#8b949e"
 }
 EOL
 fi
@@ -71,6 +72,7 @@ SUB_TEXT="#8b949e"
 DIVIDER="#30363d"
 TOTAL_CONTRIBUTED_COLOR=$(jq -r '.totalContributedColor' "$USER_CONFIG_FILE")
 TOTAL_CONTRIBUTED_TEXT_COLOR=$(jq -r '.totalContributedTextColor' "$USER_CONFIG_FILE")
+TOTAL_CONTRIBUTED_SUB_TEXT_COLOR=$(jq -r '.totalContributedSubTextColor' "$USER_CONFIG_FILE")
 # Content Coordinates (Top Align)
 VAL_Y=65    # Big Number
 LBL_Y=120   # Label

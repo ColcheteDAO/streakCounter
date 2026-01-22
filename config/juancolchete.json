@@ -6,6 +6,6 @@
   "tagImage": "",
   "flameColor":"#ff9a00",
   "totalContributedColor": "#ffffff",
-  "totalContributedTextColor": "#ffffff",
-  "totalContributedSubTextColor": "#8b949e"
+  "totalContributedTextColor": "#ff00000",
+  "totalContributedSubTextColor": "#0000ff"
 }

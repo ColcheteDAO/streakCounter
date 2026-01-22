@@ -35,7 +35,8 @@ if [ ! -f "$USER_CONFIG_FILE" ]; then
   "tagGen": true,
   "tagImage": "",
   "flameColor":"#ff9a00",
-  "totalContributedColor": "#ffffff"
+  "totalContributedColor": "#ffffff",
+  "totalContributedTextColor": "#ffffff"
 }
 EOL
 fi
@@ -69,6 +70,7 @@ ORANGE="#ff9a00"
 SUB_TEXT="#8b949e"
 DIVIDER="#30363d"
 TOTAL_CONTRIBUTED_COLOR=$(jq -r '.totalContributedColor' "$USER_CONFIG_FILE")
+TOTAL_CONTRIBUTED_TEXT_COLOR=$(jq -r '.totalContributedTextColor' "$USER_CONFIG_FILE")
 # Content Coordinates (Top Align)
 VAL_Y=65    # Big Number
 LBL_Y=120   # Label
@@ -125,7 +127,7 @@ CMD+=(
     -stroke none -fill "$TEXT_COLOR"
 
     -fill "$TOTAL_CONTRIBUTED_COLOR" -pointsize 52 -annotate -284+$VAL_Y "$TOTAL_CONTRIBUTED"
-    -fill "#ffffff" -pointsize 18 -annotate -284+$LBL_Y "Total Contributions"
+    -fill "$TOTAL_CONTRIBUTED_TEXT_COLOR" -pointsize 18 -annotate -284+$LBL_Y "Total Contributions"
     -fill "$SUB_TEXT" -pointsize 14 -annotate -284+$SUB_Y "$START_DATE - Present"
 
     # Column 2: The Ring

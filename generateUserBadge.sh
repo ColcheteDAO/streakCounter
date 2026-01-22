@@ -23,12 +23,15 @@ if [ ! -f "$USER_FILE" ] || [ ! -f "$STREAK_FILE" ]; then
     echo "Error: Data files not found for user '$USERNAME'."
     exit 1
 fi
+
+# Create Config if missing
 if [ ! -f "$USER_CONFIG_FILE" ]; then
-cat >"${USER_CONFIG_FILE}" <<EOL
+    mkdir -p config
+    cat >"${USER_CONFIG_FILE}" <<EOL
 {
   "tagBackgroundColor": "#161b22",
   "tagTextColor": "#8b949e",
-  "tagText": "$USERNAME",
+  "tagText": "@$USERNAME",
   "tagGen": true
 }
 EOL
@@ -51,6 +54,7 @@ HEIGHT=310  # Height includes the footer tag area
 
 # Colors
 BG_COLOR="#0d1117"
+# Use -r to get raw strings, ensure colors have quotes in JSON or handle them here
 TAG_BG_COLOR=$(jq -r '.tagBackgroundColor' "$USER_CONFIG_FILE")
 TEXT_COLOR="#ffffff"
 TAG_TEXT_COLOR=$(jq -r '.tagTextColor' "$USER_CONFIG_FILE")
@@ -77,33 +81,42 @@ OUTPUT="${OUTPUT_DIR}/${USERNAME}_badge.png"
 mkdir -p "$OUTPUT_DIR"
 
 # 5. Build Command
+# Initialize the command array
 CMD=(
     convert 
     -size "${WIDTH}x${HEIGHT}" 
     xc:"$BG_COLOR"
     -font "$MY_FONT"
-    
-    # --- 1. Draw Tag Background (Bottom) ---
+)
+
+# --- 1. Draw Tag Background (Bottom) ---
+CMD+=(
     -fill "$TAG_BG_COLOR" -stroke none
     -draw "rectangle 0,$TAG_START_Y $WIDTH,$HEIGHT"
+)
 
-    if [[ $TAG_GEN -eq true ]]; then
-        # --- 2. Draw Tag Text (Anchored to Bottom) ---
+# --- 2. Conditional Tag Text ---
+# We use '==' for string comparison because jq outputs "true" as a string
+if [[ "$TAG_GEN" == "true" ]]; then
+    CMD+=(
         -fill "$TAG_TEXT_COLOR" 
         -pointsize 20 
         -gravity South
-        -annotate +0+15 "$TAG_TEXT"  # Draws text 15px from the bottom edge
-    fi
+        -annotate +0+15 "$TAG_TEXT"
+    )
+fi
 
-    # --- 3. Switch back to Top Alignment for Main Content ---
+# --- 3. Main Content (Append to array) ---
+CMD+=(
+    # Switch back to Top Alignment
     -gravity North
 
-    # --- 4. Vertical Dividers ---
+    # Vertical Dividers
     -fill none -stroke "$DIVIDER" -strokewidth 2
     -draw "line 283,50 283,200"
     -draw "line 566,50 566,200"
 
-    # --- 5. Main Text Columns ---
+    # Main Text Columns
     -stroke none -fill "$TEXT_COLOR"
 
     # Column 1: Total Contributions
@@ -143,5 +156,3 @@ CMD=(
 
 # 6. Execute
 "${CMD[@]}"
-
-echo "Success: Badge generated. Username '@$USERNAME' is visible at the bottom."

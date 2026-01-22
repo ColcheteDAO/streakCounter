@@ -30,7 +30,7 @@ do
     STREAK_COUNT=0
   fi
   INDEX=$(( $INDEX + 1 ))
-done < <(jq -r '.[] | select(.date < "'$TODAY'")' "contributions/${USERNAME}.json")
+done < <(jq -c '.[] | select(.date < "'$TODAY'")' "contributions/${USERNAME}.json")
 if [[ $CONTRIBUTION_DAYS_COUNT -gt 0 ]]; then
   AVG_CONTRIBUTION=$((CONTRIBUTION_COUNT / $CONTRIBUTION_DAYS_COUNT ))
 fi

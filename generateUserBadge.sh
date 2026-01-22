@@ -39,7 +39,8 @@ if [ ! -f "$USER_CONFIG_FILE" ]; then
   "totalContributedTextColor": "#ffffff",
   "totalContributedSubTextColor": "#8b949e",
   "streakColor": "#ffffff",
-  "streakTextColor": "#ff9a00"
+  "streakTextColor": "#ff9a00",
+  "streakTextColor": "#8b949e"
 }
 EOL
 fi
@@ -157,7 +158,7 @@ CMD+=(
     # Column 2: Center Text
     -fill "$STREAK_COLOR" -pointsize 52 -annotate +0+$VAL_Y "$STREAK"
     -fill "$STREAK_TEXT_COLOR" -pointsize 18 -annotate +0+$LBL_Y "Current Streak"
-    -fill "$SUB_TEXT" -pointsize 14 -annotate +0+$SUB_Y "$CURRENT_STREAK_DISPLAY - Present"
+    -fill "$STREAK_SUB_TEXT_COLOR" -pointsize 14 -annotate +0+$SUB_Y "$CURRENT_STREAK_DISPLAY - Present"
 
     # Column 3: Longest Streak
     -fill "$TEXT_COLOR" -pointsize 52 -annotate +284+$VAL_Y "$MAX_STREAK"

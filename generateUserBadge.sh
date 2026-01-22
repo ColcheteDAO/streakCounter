@@ -27,7 +27,8 @@ if [ ! -f "$USER_CONFIG_FILE" ]; then
 cat >"${USER_CONFIG_FILE}" <<EOL
 {
   "tagBackgroundColor": "#161b22",
-  "tagTextColor": "#8b949e"
+  "tagTextColor": "#8b949e",
+  "tagText": "$USERNAME"
 }
 EOL
 fi
@@ -52,6 +53,7 @@ BG_COLOR="#0d1117"
 TAG_BG_COLOR=$(jq -r '.tagBackgroundColor' "$USER_CONFIG_FILE")
 TEXT_COLOR="#ffffff"
 TAG_TEXT_COLOR=$(jq -r '.tagTextColor' "$USER_CONFIG_FILE")
+TAG_TEXT=$(jq -r '.tagText' "$USER_CONFIG_FILE")
 ORANGE="#ff9a00"
 SUB_TEXT="#8b949e"
 DIVIDER="#30363d"
@@ -87,7 +89,7 @@ CMD=(
     -fill "$TAG_TEXT_COLOR" 
     -pointsize 20 
     -gravity South
-    -annotate +0+15 "@$USERNAME"  # Draws text 15px from the bottom edge
+    -annotate +0+15 "$TAG_TEXT"  # Draws text 15px from the bottom edge
 
     # --- 3. Switch back to Top Alignment for Main Content ---
     -gravity North

@@ -4,11 +4,14 @@ STREAK_COUNT=0
 CONTRIBUTION_COUNT=0
 AVG_CONTRIBUTION=0
 TODAY=$(date -u +"%Y-%m-%d" -d "-3 hours")
+TODAY_YEAR=${TODAY:0:4}
 CONTRIBUTION_DAYS_COUNT=$(cat "contributions/${USERNAME}.json" | jq -r '[.[] | select(.date < "'$TODAY'")] | length')
 MAX_STREAK=0
 INDEX=0
 MAX_STREAK_DATE=null
 CURRENT_STREAK_DATE=null
+FIRST_CONTRIBUTION_DATE=$(echo $CONTRIBUTION_DAYS_COUNT | jq '.[0].date')
+FIRST_CONTRIBUTION_YEAR=${FIRST_CONTRIBUTION_DATE:0:4}
 declare -a YEARS_CONTRIBUTION
 while read -r contribution; 
 do 
@@ -38,6 +41,14 @@ fi
 echo $USERNAME streak is $STREAK_COUNT total contributions $CONTRIBUTION_COUNT avg contributions per day $AVG_CONTRIBUTION best streak is $MAX_STREAK
 echo ${YEARS_CONTRIBUTION["2018"]}
 echo $YEARS_CONTRIBUTION
+CONTRIBUTION_PER_YEAR=""
+for i in $(seq $FIRST_CONTRIBUTION_YEAR $TODAY_YEAR)
+do
+  CONTRIBUTION_PER_YEAR+="{"
+  CONTRIBUTION_PER_YEAR+='"year":'$seq''
+  CONTRIBUTION_PER_YEAR+='"totalContributed":'${YEARS_CONTRIBUTION[$seq]}''
+  CONTRIBUTION_PER_YEAR+="}"
+done
 mkdir -p streakData
 cat >"streakData/${USERNAME}.json" <<EOL
 {
@@ -48,5 +59,6 @@ cat >"streakData/${USERNAME}.json" <<EOL
   "maxStreak": "$MAX_STREAK",
   "maxStreakDate": "$MAX_STREAK_DATE",
   "currentStreakDate": "$CURRENT_STREAK_DATE"
+  "contributionPerYear": [$CONTRIBUTION_PER_YEAR]
 }
 EOL

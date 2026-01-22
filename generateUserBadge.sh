@@ -34,7 +34,8 @@ if [ ! -f "$USER_CONFIG_FILE" ]; then
   "tagText": "@$USERNAME",
   "tagGen": true,
   "tagImage": "",
-  "flameColor":"#ff9a00",
+  "ringColor":"#ff9a00",
+  "circleColor":"#ff9a00",
   "totalContributedColor": "#ffffff",
   "totalContributedTextColor": "#ffffff",
   "totalContributedSubTextColor": "#8b949e",
@@ -73,6 +74,7 @@ TAG_TEXT=$(jq -r '.tagText' "$USER_CONFIG_FILE")
 TAG_GEN=$(jq -r '.tagGen' "$USER_CONFIG_FILE")
 TAG_IMAGE=$(jq -r '.tagImage' "$USER_CONFIG_FILE")
 FLAME_COLOR=$(jq -r '.flameColor' "$USER_CONFIG_FILE")
+RING_COLOR=$(jq -r '.ringColor' "$USER_CONFIG_FILE")
 ORANGE="#ff9a00"
 SUB_TEXT="#8b949e"
 DIVIDER="#30363d"
@@ -145,7 +147,7 @@ CMD+=(
     -fill "$TOTAL_CONTRIBUTED_SUB_TEXT_COLOR" -pointsize 14 -annotate -284+$SUB_Y "$START_DATE - Present"
 
     # Column 2: The Ring
-    -fill none -stroke "$ORANGE" -strokewidth 5
+    -fill none -stroke "$RING_COLOR" -strokewidth 5
     -draw "arc 330,30 520,220 0,360"
     
     # --- FLAME ICON ---

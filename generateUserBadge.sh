@@ -48,7 +48,7 @@ RAW_CURRENT_STREAK_DATE=$(jq -r '.currentStreakDate' "$STREAK_FILE")
 [[ "$RAW_CURRENT_STREAK_DATE" != "null" ]] && CURRENT_STREAK_DISPLAY=$(date -d "$RAW_CURRENT_STREAK_DATE" +"%b %d, %Y") || CURRENT_STREAK_DISPLAY="N/A"
 
 STREAK=$(jq -r '.streakCount' "$STREAK_FILE")
-TOTAL_CONTRIBUTED=$(jq -r '.CONTRIBUTEDutionCount' "$STREAK_FILE")
+TOTAL_CONTRIBUTED=$(jq -r '.contributionCount' "$STREAK_FILE")
 MAX_STREAK=$(jq -r '.maxStreak' "$STREAK_FILE")
 
 # 4. Styling & Coordinates
@@ -126,7 +126,7 @@ CMD+=(
 
     # Column 1: Total CONTRIBUTEDutions
     -pointsize 52 -annotate -284+$VAL_Y "$TOTAL_CONTRIBUTED" -fill ""
-    -pointsize 18 -annotate -284+$LBL_Y "Total CONTRIBUTEDutions"
+    -pointsize 18 -annotate -284+$LBL_Y "Total Contributions"
     -fill "$SUB_TEXT" -pointsize 14 -annotate -284+$SUB_Y "$START_DATE - Present"
 
     # Column 2: The Ring

@@ -32,7 +32,8 @@ if [ ! -f "$USER_CONFIG_FILE" ]; then
   "tagBackgroundColor": "#161b22",
   "tagTextColor": "#8b949e",
   "tagText": "@$USERNAME",
-  "tagGen": true
+  "tagGen": true,
+  "tagImage": ""
 }
 EOL
 fi
@@ -60,6 +61,7 @@ TEXT_COLOR="#ffffff"
 TAG_TEXT_COLOR=$(jq -r '.tagTextColor' "$USER_CONFIG_FILE")
 TAG_TEXT=$(jq -r '.tagText' "$USER_CONFIG_FILE")
 TAG_GEN=$(jq -r '.tagGen' "$USER_CONFIG_FILE")
+TAG_IMAGE=$(jq -r '.tagImage' "$USER_CONFIG_FILE")
 ORANGE="#ff9a00"
 SUB_TEXT="#8b949e"
 DIVIDER="#30363d"
@@ -85,8 +87,12 @@ if [[ "$TAG_GEN" == "true" ]]; then
     TAG_HEIGHT=50
     TAG_START_Y=$((HEIGHT - TAG_HEIGHT))
     TAG_IMAGE_START_Y=$((HEIGHT))
-    CMD+=(
+    if [[ ${#TAG_IMAGE} -gt 4 ]]; then
+        CMD+=(
         -draw "image SrcOver 0,0 $WIDTH,$TAG_HEIGHT images/tagBG.jpg"
+        )
+    fi
+    CMD+=(
         -fill "$TAG_BG_COLOR" -stroke none
         -draw "rectangle 0,$TAG_IMAGE_START_Y $WIDTH,$HEIGHT"
         -fill "$TAG_TEXT_COLOR" 

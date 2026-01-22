@@ -1,4 +1,4 @@
-o#!/bin/bash
+#!/bin/bash
 USERNAME=$1
 STREAK_COUNT=0
 CONTRIBUTION_COUNT=0

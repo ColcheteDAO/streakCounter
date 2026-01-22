@@ -48,7 +48,7 @@ HEIGHT=310  # Height includes the footer tag area
 
 # Colors
 BG_COLOR="#0d1117"
-TAG_BG_COLOR=$(jq -r '.tagBackgroundColor' "$STREAK_FILE")
+TAG_BG_COLOR=$(jq -r '.tagBackgroundColor' "$USER_CONFIG_FILE")
 TEXT_COLOR="#ffffff"
 TAG_TEXT_COLOR="#8b949e" # GitHub grey for subtle tag
 ORANGE="#ff9a00"

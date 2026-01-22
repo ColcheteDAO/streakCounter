@@ -37,7 +37,8 @@ if [ ! -f "$USER_CONFIG_FILE" ]; then
   "flameColor":"#ff9a00",
   "totalContributedColor": "#ffffff",
   "totalContributedTextColor": "#ffffff",
-  "totalContributedSubTextColor": "#8b949e"
+  "totalContributedSubTextColor": "#8b949e",
+  "streakColor": "#ffffff"
 }
 EOL
 fi
@@ -73,6 +74,9 @@ DIVIDER="#30363d"
 TOTAL_CONTRIBUTED_COLOR=$(jq -r '.totalContributedColor' "$USER_CONFIG_FILE")
 TOTAL_CONTRIBUTED_TEXT_COLOR=$(jq -r '.totalContributedTextColor' "$USER_CONFIG_FILE")
 TOTAL_CONTRIBUTED_SUB_TEXT_COLOR=$(jq -r '.totalContributedSubTextColor' "$USER_CONFIG_FILE")
+STREAK_COLOR=$(jq -r '.streakColor' "$USER_CONFIG_FILE")
+STREAK_TEXT_COLOR=$(jq -r '.streakTextColor' "$USER_CONFIG_FILE")
+STREAK_SUB_TEXT_COLOR=$(jq -r '.streakSubTextColor' "$USER_CONFIG_FILE")
 # Content Coordinates (Top Align)
 VAL_Y=65    # Big Number
 LBL_Y=120   # Label

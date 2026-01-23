@@ -7,7 +7,7 @@
   "tagImage": "",
   "backgroundImage": "",
   "flameColor":"#ff9a00",
-  "flameBlur": false,
+  "flameBlur": true,
   "ringColor":"#ff9a00",
   "totalContributedColor": "#ffffff",
   "totalContributedTextColor": "#ffffff",

@@ -190,15 +190,25 @@ cat >"${USERNAME}/statistics/${USERNAME}Standalone.html" <<EOL
 <head>
   <meta charset="utf-8">
   <title>$USERNAME - Skyscraper</title>
-  <link rel="stylesheet" href="./style.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    #chart-container {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+    }
+  </style>
 </head>
 <body>
   <div id="chart-container"></div>
   <script src="https://echarts.apache.org/en/js/vendors/echarts/dist/echarts.min.js"></script>
   <script src="https://echarts.apache.org/en/js/vendors/echarts-gl/dist/echarts-gl.min.js"></script>
   <script>
-    $(cat "${USERNAME}/statistics/${USERNAME}Data.js") 
-    $(cat "${USERNAME}/statistics/${USERNAME}Skyscraper.js") 
+    $(cat "./${USERNAME}Data.js") 
+    $(cat "./${USERNAME}Skyscraper.js") 
   </script>
 </body>
 </html>

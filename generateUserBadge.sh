@@ -155,16 +155,23 @@ CMD+=(
     -fill "$TOTAL_CONTRIBUTED_COLOR" -pointsize 52 -annotate -284+$VAL_Y "$TOTAL_CONTRIBUTED"
     -fill "$TOTAL_CONTRIBUTED_TEXT_COLOR" -pointsize 18 -annotate -284+$LBL_Y "Total Contributions"
     -fill "$TOTAL_CONTRIBUTED_SUB_TEXT_COLOR" -pointsize 14 -annotate -284+$SUB_Y "$START_DATE - Present"
+    )
 
     # Column 2: The Ring
-    -fill none -stroke "$RING_COLOR" -strokewidth 5
-    -draw "arc 330,30 520,220 0,360"
     
+    CMD+=( "(" 
+        -size "${WIDTH}x${HEIGHT}" xc:none 
+        -fill none -stroke "$RING_COLOR" -strokewidth 5
+        -draw "arc 330,30 520,220 0,360"
+        -blur 0x2
+    ")" 
+    -composite)
+    CMD+=(
     # --- FLAME ICON ---
     # 1. Mask (Hides the ring behind the flame - STAYS ON MAIN LAYER)
     -fill "$BG_COLOR" -stroke "$BG_COLOR" -strokewidth 8
     -draw "path 'M 425,42 C 405,42 402,20 414,12 Q 424,25 434,0 C 445,12 445,42 425,42 Z'"
-)
+    )
     
     # 2. Outer Flame (ISOLATED LAYER for Blur)
     # We create a new transparent canvas, draw the flame, blur it, then composite it back.
@@ -181,7 +188,7 @@ CMD+=(
         -fill "$FLAME_COLOR" -stroke none 
         -draw "path 'M 425,42 C 405,42 402,20 414,12 Q 424,25 434,0 C 445,12 445,42 425,42 Z'" )
     fi
-CMD+=(    
+    CMD+=(    
     # 3. Inner Flame (Hollow Effect - SHARP)
     -fill "$BG_COLOR" -stroke none
     -draw "translate 422,28 rotate 13 translate -422,-28 path 'M 422,37 C 414,37 414,25 417,20 Q 423,28 429,13 C 434,22 435,37 422,37 Z'"

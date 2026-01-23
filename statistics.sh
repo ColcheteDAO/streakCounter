@@ -46,8 +46,8 @@ cat >"statistics/${USERNAME}.json" <<EOL
 EOL
 
 cat >"statistics/${USERNAME}.js" <<EOL
-maxContribution=$MAX_CONTRIBUTION
-contributionDaysCount=$CONTRIBUTION_DAYS_COUNT
-dayCommitmentData=$DAY_COMMITMENT_DATA
-weekNumber=$WEEK_NUMBER
+const maxContribution=$MAX_CONTRIBUTION
+const contributionDaysCount=$CONTRIBUTION_DAYS_COUNT
+const dayCommitmentData=$DAY_COMMITMENT_DATA
+const weekNumber=$WEEK_NUMBER
 EOL

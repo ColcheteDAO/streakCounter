@@ -27,7 +27,7 @@ if [[ $ACCOUNT_CREATED_AT_YEAR -gt 1900 ]]; then
         }')
         NEW_DAYS=$(echo $RESPONSE | jq '[.data.user.contributionsCollection.contributionCalendar.weeks[].contributionDays[]] | .[:-1]')
         RUN_YEAR=$((RUN_YEAR + 1))
-        jq -n --slurpfile old "contributions/${USERNAME}.json" --argjson new "$NEW_DAYS" '($old | add) + $new' > "temp.json" && mv "temp.json" "contributions/${USERNAME}.json"
+        jq -n --slurpfile old "contributions/${USERNAME}.json" --argjson new "$NEW_DAYS" '($old | add) + $new' > "temp.json" && mv "temp.json" "${USERNAME}/contributions/${USERNAME}.json"
     done
 else
 echo account $USERNAME does not exists on github

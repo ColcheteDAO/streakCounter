@@ -62,6 +62,17 @@ cat >"${USERNAME}/statistics/${USERNAME}.html" <<EOL
   <meta charset="utf-8">
   <title>$USERNAME - Skyscraper</title>
   <link rel="stylesheet" href="./style.css">
+  <styles>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    #chart-container {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+    }
+  </styles>
 </head>
 <body>
   <div id="chart-container"></div>

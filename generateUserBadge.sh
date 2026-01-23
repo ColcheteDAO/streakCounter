@@ -176,7 +176,6 @@ CMD+=(
     -composite)
     else
     CMD+=(
-        -size "${WIDTH}x${HEIGHT}" xc:none 
         -fill "$FLAME_COLOR" -stroke none 
         -draw "path 'M 425,42 C 405,42 402,20 414,12 Q 424,25 434,0 C 445,12 445,42 425,42 Z'" )
     fi

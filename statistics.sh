@@ -10,7 +10,7 @@ GLOBAL_WEEK_COUNT=0
 FIRST_CONTRIBUTION_DATE=$(jq -r '.[0].date' "${USERNAME}/contributions/${USERNAME}.json")
 FIRST_CONTRIBUTION_YEAR=${FIRST_CONTRIBUTION_DATE:0:4}
 CURRENT_CONTRIBUTION_YEAR=$FIRST_CONTRIBUTION_YEAR
-mkdir -p statistics
+mkdir -p "${USERNAME}/statistics"
 DAY_COMMITMENT_DATA+="["
 WEEK_NUMBER+="["
 while read -r contribution; 

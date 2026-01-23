@@ -37,6 +37,7 @@ if [ ! -f "$USER_CONFIG_FILE" ]; then
   "tagImage": "",
   "backgroundImage": "",
   "flameColor":"#ff9a00",
+  "flameBlur": false,
   "ringColor":"#ff9a00",
   "totalContributedColor": "#ffffff",
   "totalContributedTextColor": "#ffffff",
@@ -76,6 +77,7 @@ TAG_GEN=$(jq -r '.tagGen' "$USER_CONFIG_FILE")
 TAG_IMAGE=$(jq -r '.tagImage' "$USER_CONFIG_FILE")
 BACKGROUND_IMAGE=$(jq -r '.backgroundImage' "$USER_CONFIG_FILE")
 FLAME_COLOR=$(jq -r '.flameColor' "$USER_CONFIG_FILE")
+FLAME_BLUR=$(jq -r '.flameBlur' "$USER_CONFIG_FILE")
 RING_COLOR=$(jq -r '.ringColor' "$USER_CONFIG_FILE")
 ORANGE="#ff9a00"
 SUB_TEXT="#8b949e"
@@ -160,17 +162,25 @@ CMD+=(
     # 1. Mask (Hides the ring behind the flame - STAYS ON MAIN LAYER)
     -fill "$BG_COLOR" -stroke "$BG_COLOR" -strokewidth 8
     -draw "path 'M 425,42 C 405,42 402,20 414,12 Q 424,25 434,0 C 445,12 445,42 425,42 Z'"
+)
     
     # 2. Outer Flame (ISOLATED LAYER for Blur)
     # We create a new transparent canvas, draw the flame, blur it, then composite it back.
-    "(" 
+    if [[ "$FLAME_BLUR" == "true" ]]; then
+    CMD+=( "(" 
         -size "${WIDTH}x${HEIGHT}" xc:none 
         -fill "$FLAME_COLOR" -stroke none 
         -draw "path 'M 425,42 C 405,42 402,20 414,12 Q 424,25 434,0 C 445,12 445,42 425,42 Z'" 
         -blur 0x2 
     ")" 
-    -composite
-    
+    -composite)
+    else
+    CMD+=(
+        -size "${WIDTH}x${HEIGHT}" xc:none 
+        -fill "$FLAME_COLOR" -stroke none 
+        -draw "path 'M 425,42 C 405,42 402,20 414,12 Q 424,25 434,0 C 445,12 445,42 425,42 Z'" )
+    fi
+CMD+=(    
     # 3. Inner Flame (Hollow Effect - SHARP)
     -fill "$BG_COLOR" -stroke none
     -draw "translate 422,28 rotate 13 translate -422,-28 path 'M 422,37 C 414,37 414,25 417,20 Q 423,28 429,13 C 434,22 435,37 422,37 Z'"

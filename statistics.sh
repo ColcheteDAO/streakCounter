@@ -26,7 +26,7 @@ do
   INDEX=$(( $INDEX + 1 ))
 done < <(jq -c '.[] | select(.date < "'$TODAY'")' "contributions/${USERNAME}.json")
 DAY_COMMITMENT_DATA+="]"
-WEEK_NUMBER="]"
+WEEK_NUMBER+="]"
 mkdir -p streakData
 cat >"statistics/${USERNAME}.json" <<EOL
 {

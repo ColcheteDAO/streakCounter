@@ -6,7 +6,7 @@ export LC_NUMERIC="C"
 
 USERNAME=$1
 USER_FILE="data/${USERNAME}.json"
-USER_CONFIG_FILE="config/${USERNAME}.json"
+USER_CONFIG_FILE="${USERNAME}/config/${USERNAME}.json"
 STREAK_FILE="streakData/${USERNAME}.json"
 
 # Validate input
@@ -26,7 +26,7 @@ fi
 
 # Create Config if missing
 if [ ! -f "$USER_CONFIG_FILE" ]; then
-    mkdir -p config
+    mkdir -p "${USERNAME}/config"
     cat >"${USER_CONFIG_FILE}" <<EOL
 {
   "backgroundColor": "#0d1117",

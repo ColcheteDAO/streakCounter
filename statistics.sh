@@ -62,7 +62,7 @@ cat >"${USERNAME}/statistics/${USERNAME}.html" <<EOL
   <meta charset="utf-8">
   <title>$USERNAME - Skyscraper</title>
   <link rel="stylesheet" href="./style.css">
-  <styles>
+  <style>
     * {
       margin: 0;
       padding: 0;
@@ -72,7 +72,7 @@ cat >"${USERNAME}/statistics/${USERNAME}.html" <<EOL
       height: 100vh;
       overflow: hidden;
     }
-  </styles>
+  </style>
 </head>
 <body>
   <div id="chart-container"></div>

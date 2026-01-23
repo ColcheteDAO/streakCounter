@@ -23,7 +23,7 @@ if [ ! -f "$USER_FILE" ] || [ ! -f "$STREAK_FILE" ]; then
     echo "Error: Data files not found for user '$USERNAME'."
     exit 1
 fi
-
+mkdir -p "${USERNAME}/images"
 # Create Config if missing
 if [ ! -f "$USER_CONFIG_FILE" ]; then
     mkdir -p "${USERNAME}/config"

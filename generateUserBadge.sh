@@ -5,7 +5,7 @@ set -e
 export LC_NUMERIC="C"
 
 USERNAME=$1
-USER_FILE="data/${USERNAME}.json"
+USER_FILE="${USERNAME}/data/${USERNAME}.json"
 USER_CONFIG_FILE="${USERNAME}/config/${USERNAME}.json"
 STREAK_FILE="${USERNAME}/streakData/${USERNAME}.json"
 

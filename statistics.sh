@@ -46,7 +46,7 @@ cat >"statistics/${USERNAME}.json" <<EOL
 }
 EOL
 
-cat >"statistics/${USERNAME}.js" <<EOL
+cat >"statistics/${USERNAME}Data.js" <<EOL
 const maxContribution=$MAX_CONTRIBUTION
 const contributionDaysCount=$CONTRIBUTION_DAYS_COUNT
 const dayCommitmentData=$DAY_COMMITMENT_DATA

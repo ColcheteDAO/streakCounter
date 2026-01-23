@@ -12,6 +12,8 @@ MAX_STREAK_DATE=null
 CURRENT_STREAK_DATE=null
 FIRST_CONTRIBUTION_DATE=$(jq -r '.[0].date' "contributions/${USERNAME}.json")
 FIRST_CONTRIBUTION_YEAR=${FIRST_CONTRIBUTION_DATE:0:4}
+MAX_CONTRIBUTION=0
+
 declare -a YEARS_CONTRIBUTION
 while read -r contribution; 
 do 
@@ -20,6 +22,9 @@ do
   CONTRIBUTION_YEAR=${CONTRIBUTION_DATE:0:4}
   YEARS_CONTRIBUTION[CONTRIBUTION_YEAR]=$(( YEARS_CONTRIBUTION[CONTRIBUTION_YEAR] + CONTRIBUTION_COUNT ))
   if [[ $CONTRIBUTION_COUNT -gt 0 ]]; then
+    if [[ $CONTRIBUTION_COUNT > $MAX_CONTRIBUTION ]]; then
+      MAX_CONTRIBUTION=$CONTRIBUTION_COUNT
+    fi 
     STREAK_COUNT=$(( STREAK_COUNT + 1 ))
     if [[ $STREAK_COUNT -eq 1 ]]; then
       CURRENT_STREAK_DATE=$(cat "contributions/${USERNAME}.json" | jq -r '.['$INDEX'].date')
@@ -61,6 +66,7 @@ cat >"streakData/${USERNAME}.json" <<EOL
   "username": "$USERNAME",
   "streakCount": "$STREAK_COUNT",
   "contributionCount": "$CONTRIBUTION_COUNT",
+  "maxContribution": "$MAX_CONTRIBUTION",
   "avgContribution": "$AVG_CONTRIBUTION",
   "maxStreak": "$MAX_STREAK",
   "maxStreakDate": "$MAX_STREAK_DATE",

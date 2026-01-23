@@ -61,7 +61,6 @@ cat >"${USERNAME}/statistics/${USERNAME}.html" <<EOL
 <head>
   <meta charset="utf-8">
   <title>$USERNAME - Skyscraper</title>
-  <link rel="stylesheet" href="./style.css">
   <style>
     * {
       margin: 0;

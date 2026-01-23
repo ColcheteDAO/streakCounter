@@ -1,6 +1,7 @@
 #!/bin/bash 
 USERNAME=$1
 
+
 cat >"statistics/${USERNAME}YearDominanceStandalone.html" <<EOL
 <!DOCTYPE html>
 <html lang="en" style="height: 100%">
@@ -13,26 +14,6 @@ cat >"statistics/${USERNAME}YearDominanceStandalone.html" <<EOL
   
   <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
   
-  <!-- Uncomment this line if you want to dataTool extension
-  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5/dist/extension/dataTool.min.js"></script>
-  -->
-  <!-- Uncomment this line if you want to use gl extension
-  <script type="text/javascript" src="https://echarts.apache.org/en/js/vendors/echarts-gl/dist/echarts-gl.min.js"></script>
-  -->
-  <!-- Uncomment this line if you want to echarts-stat extension
-  <script type="text/javascript" src="https://echarts.apache.org/en/js/vendors/echarts-stat/dist/ecStat.min.js"></script>
-  -->
-  <!-- Uncomment this line if you want to echarts-graph-modularity extension
-  <script type="text/javascript" src="https://echarts.apache.org/en/js/vendors/echarts-graph-modularity/dist/echarts-graph-modularity.min.js"></script>
-  -->
-  <!-- Uncomment this line if you want to use map
-  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@4.9.0/map/js/world.js"></script>
-  -->
-  <!-- Uncomment these two lines if you want to use bmap extension
-  <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=YOUR_API_KEY"></script>
-  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5/dist/extension/bmap.min.js"></script>
-  -->
-
   <script type="text/javascript">
     var dom = document.getElementById('container');
     var myChart = echarts.init(dom, null, {
@@ -66,16 +47,7 @@ cat >"statistics/${USERNAME}YearDominanceStandalone.html" <<EOL
       itemStyle: {
         borderRadius: 8
       },
-      data: [
-        { value: 1, name: 'rose 1' },
-        { value: 300, name: 'rose 2' },
-        { value: 5000, name: 'rose 3' },
-        { value: 3000, name: 'rose 4' },
-        { value: 200, name: 'rose 5' },
-        { value: 26, name: 'rose 6' },
-        { value: 22, name: 'rose 7' },
-        { value: 18, name: 'rose 8' }
-      ]
+    data: $(jq '.contributionPerYear | map({name: .year, value: .totalContributed})' "streakData/${USERNAME}.json")
     }
   ]
 };

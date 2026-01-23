@@ -41,6 +41,7 @@ if [ ! -f "$USER_CONFIG_FILE" ]; then
   "flameBlurForce": "0x2",
   "ringColor":"#ff9a00",
   "ringBlur":false,
+  "ringBlurForce": "0x2",
   "totalContributedColor": "#ffffff",
   "totalContributedTextColor": "#ffffff",
   "totalContributedSubTextColor": "#8b949e",
@@ -83,6 +84,7 @@ FLAME_BLUR=$(jq -r '.flameBlur' "$USER_CONFIG_FILE")
 FLAME_BLUR_FORCE=$(jq -r '.flameBlurForce' "$USER_CONFIG_FILE")
 RING_COLOR=$(jq -r '.ringColor' "$USER_CONFIG_FILE")
 RING_BLUR=$(jq -r '.ringBlur' "$USER_CONFIG_FILE")
+RING_BLUR_FORCE=$(jq -r '.ringBlurForce' "$USER_CONFIG_FILE")
 ORANGE="#ff9a00"
 SUB_TEXT="#8b949e"
 DIVIDER="#30363d"
@@ -165,7 +167,7 @@ CMD+=(
         -size "${WIDTH}x${HEIGHT}" xc:none 
         -fill none -stroke "$RING_COLOR" -strokewidth 5
         -draw "arc 330,30 520,220 0,360"
-        -blur 0x2
+        -blur $RING_BLUR_FORCE
     ")" 
     -composite)
     else

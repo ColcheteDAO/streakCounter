@@ -105,7 +105,7 @@ SUB_Y=145   # Date
 MY_FONT=$(convert -list font | grep -oE "Arial|Liberation-Sans|DejaVu-Sans" | head -n 1)
 [ -z "$MY_FONT" ] && MY_FONT="fixed"
 
-OUTPUT_DIR="badges"
+OUTPUT_DIR="${USERNAME}/badges"
 OUTPUT="${OUTPUT_DIR}/${USERNAME}_badge.png"
 mkdir -p "$OUTPUT_DIR"
 

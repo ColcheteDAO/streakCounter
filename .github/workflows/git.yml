@@ -1,6 +1,10 @@
 name: Run all
 on:
   workflow_call:
+    inputs:
+      exec:
+        required: false
+        type: string
 jobs:
   build:
     environment: main
@@ -8,6 +12,10 @@ jobs:
     container: juancolchete/imagemagickgithubactions:latest
     steps:   
       - uses: actions/checkout@v4
+      - name: execute actions
+        shell: bash
+        run: |
+            ${{ inputs.exec }}
       - name: Upload to git
         id: uploadGit
         shell: bash

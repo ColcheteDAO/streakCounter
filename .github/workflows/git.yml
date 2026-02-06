@@ -1,0 +1,13 @@
+name: Run all
+on:
+  workflow_call:
+jobs:
+  build:
+    environment: main
+    runs-on: ubuntu-latest
+    steps:            
+      - name: Upload to git
+        id: uploadGit
+        shell: bash
+        run: |
+          curl -s https://raw.githubusercontent.com/juancolchete/utils/main/gitUpload.sh | bash /dev/stdin ${{ vars.GIT_UPLOAD_PARAMS }}

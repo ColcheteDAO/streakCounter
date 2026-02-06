@@ -5,7 +5,9 @@ jobs:
   build:
     environment: main
     runs-on: ubuntu-latest
-    steps:            
+    container: juancolchete/imagemagickgithubactions:latest
+    steps:   
+      - uses: actions/checkout@v4
       - name: Upload to git
         id: uploadGit
         shell: bash

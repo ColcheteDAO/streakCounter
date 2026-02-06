@@ -1,4 +1,4 @@
-name: Run all
+name: Upload git
 on:
   workflow_call:
     inputs:

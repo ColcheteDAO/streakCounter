@@ -16,8 +16,6 @@ jobs:
               bash generateUserBadge.sh $user
             done < <(jq -r '.users[]' "config/run.json")
             
-      - name: Upload to git
-        id: uploadGit
-        shell: bash
-        run: |
-          curl -s https://raw.githubusercontent.com/juancolchete/utils/main/gitUpload.sh | bash /dev/stdin ${{ vars.GIT_UPLOAD_PARAMS }}
+  upload-git:
+    uses: colchetedao/streakCounter/.github/workflows/git.yml@main
+    secrets: inherit

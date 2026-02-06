@@ -7,7 +7,7 @@ on:
         type: string
 jobs:
   build:
-    environment: main
+    environment: ${{ github.ref_name }}
     runs-on: ubuntu-latest
     container: juancolchete/imagemagickgithubactions:latest
     steps:   
@@ -20,4 +20,5 @@ jobs:
         id: uploadGit
         shell: bash
         run: |
+          GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
           curl -s https://raw.githubusercontent.com/juancolchete/utils/main/gitUpload.sh | bash /dev/stdin ${{ vars.GIT_UPLOAD_PARAMS }} "bot: ${{ github.workflow }}"

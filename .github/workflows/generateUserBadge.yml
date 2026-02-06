@@ -17,5 +17,6 @@ jobs:
             done < <(jq -r '.users[]' "config/run.json")
             
   upload-git:
+    needs: build
     uses: colchetedao/streakCounter/.github/workflows/git.yml@main
     secrets: inherit

@@ -10,5 +10,5 @@ jobs:
       exec: |
         while read -r user; 
         do 
-          bash saveContributionCountPerDay.sh $user "${{ secrets.GITHUB_TOKEN }}"
+          bash saveContributionCountPerDay.sh $user "$GITHUB_TOKEN"
         done < <(jq -r '.users[]' "config/run.json")

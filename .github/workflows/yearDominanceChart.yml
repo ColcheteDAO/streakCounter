@@ -2,21 +2,12 @@ name: Generate year dominance chart
 on:
   workflow_dispatch:
 jobs:
-  build:
-    environment: main
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Generate year dominance chart
-        shell: bash
-        run: |
-            while read -r user; 
-            do 
-              bash yearDominanceChart.sh $user
-            done < <(jq -r '.users[]' "config/run.json")
-            
-      - name: Upload to git
-        id: uploadGit
-        shell: bash
-        run: |
-          curl -s https://raw.githubusercontent.com/juancolchete/utils/main/gitUpload.sh | bash /dev/stdin ${{ vars.GIT_UPLOAD_PARAMS }}
+  upload-git:
+    uses: colchetedao/streakCounter/.github/workflows/git.yml@main
+    secrets: inherit
+    with:
+      exec: |
+        while read -r user; 
+        do 
+          bash yearDominanceChart.sh $user
+        done < <(jq -r '.users[]' "config/run.json")

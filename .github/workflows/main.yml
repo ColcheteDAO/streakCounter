@@ -4,24 +4,14 @@ on:
   schedule:
     - cron: "59 9,15,21 * * *"
 jobs:
-  build:
-    environment: main
-    runs-on: ubuntu-latest
-    container: juancolchete/imagemagickgithubactions:latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Calculate user streak
-        shell: bash
-        run: |
-            while read -r user; 
-            do 
-              bash saveContributionCountPerDay.sh $user "${{ secrets.GITHUB_TOKEN }}"
-              bash calculateUserStreak.sh $user
-              bash generateUserBadge.sh $user
-            done < <(jq -r '.users[]' "config/run.json")
-            
-      - name: Upload to git
-        id: uploadGit
-        shell: bash
-        run: |
-          curl -s https://raw.githubusercontent.com/juancolchete/utils/main/gitUpload.sh | bash /dev/stdin ${{ vars.GIT_UPLOAD_PARAMS }}
+  upload-git:
+    uses: colchetedao/streakCounter/.github/workflows/git.yml@main
+    secrets: inherit
+    with:
+      exec: |
+        while read -r user; 
+        do 
+          bash saveContributionCountPerDay.sh $user "${{ secrets.GITHUB_TOKEN }}"
+          bash calculateUserStreak.sh $user
+          bash generateUserBadge.sh $user
+        done < <(jq -r '.users[]' "config/run.json")

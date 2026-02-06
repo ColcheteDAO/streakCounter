@@ -1,22 +1,13 @@
 name: Generate user badge
 on:
   workflow_dispatch:
-jobs:
-  build:
-    environment: main
-    runs-on: ubuntu-latest
-    container: juancolchete/imagemagickgithubactions:latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Generate user badge
-        shell: bash
-        run: |
-            while read -r user; 
-            do 
-              bash generateUserBadge.sh $user
-            done < <(jq -r '.users[]' "config/run.json")
-            
+jobs:     
   upload-git:
-    needs: build
     uses: colchetedao/streakCounter/.github/workflows/git.yml@main
     secrets: inherit
+    with:
+      exec: |
+        while read -r user; 
+        do 
+          bash generateUserBadge.sh $user
+        done < <(jq -r '.users[]' "config/run.json")

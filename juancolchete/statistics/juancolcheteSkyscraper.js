@@ -49,7 +49,7 @@ option = {
     type: 'value'
   },
   grid3D: {
-    boxWidth: 10160,
+    boxWidth: 10180,
     boxDepth: 80,
     light: {
       main: {
